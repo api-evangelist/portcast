@@ -1,0 +1,83 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Portcast
+providerId: portcast
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Supply Chain
+- Container Tracking
+- Logistics
+- Predictive ETA
+- Ocean Freight
+- Plans
+description: >-
+  Portcast pricing is sales-led and not publicly published. Access to the
+  Container Tracking API and the broader predictive visibility platform is sold
+  via a per-shipment / volume-based subscription negotiated with Portcast sales,
+  typically following a Discovery Session, Tech Alignment, and Integration
+  onboarding. Portcast is also available through the AWS Marketplace. Specific
+  per-unit rates and tier thresholds are not reconciled in this artifact.
+notes: >-
+  No public price list. Confirm container/shipment volume tiers, included
+  carrier coverage, and predictive ETA add-ons directly with Portcast sales on
+  reconciliation.
+sources:
+- https://www.portcast.io/container-tracking-api
+- https://www.portcast.io/pricing
+- https://aws.amazon.com/marketplace/pp/prodview-qfvxj56hpmtue
+plans:
+- id: portcast-platform
+  name: Predictive Visibility Platform
+  type: subscription
+  description: >-
+    Sales-led subscription to the Portcast container tracking and predictive
+    visibility platform, including API access. Pricing is volume-based on
+    tracked shipments/containers and negotiated per customer.
+  entries:
+  - label: Tracked Shipments
+    name: tracked_shipments
+    type: usage
+    metric: shipments
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Container Tracking API
+  - name: Predictive ETA / ETD
+  - name: Vessel Schedules
+  - name: Push API (Webhooks)
+  - name: Container Route
+  - name: Container Risks
+  - name: Container Terminal Data
+- id: portcast-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Enterprise agreements with multi-account (x-customer) flows, expanded
+    carrier coverage, port congestion data, dedicated support, and negotiated
+    volume terms. Contact Portcast sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: Multi-Account Flows
+  - name: Port Congestion Data
+  - name: Dedicated Support
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

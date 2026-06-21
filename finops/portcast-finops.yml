@@ -1,0 +1,88 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Portcast
+providerId: portcast
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Supply Chain
+- Container Tracking
+- Logistics
+- Predictive ETA
+- Ocean Freight
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Portcast spend. Portcast bills via a sales-led, volume-based
+  subscription to its predictive visibility platform and Container Tracking API,
+  metered primarily on tracked shipments / containers. Pricing is not publicly
+  published; cost meters and rates below are structural and not reconciled
+  against a public price list. Portcast is also transactable via AWS
+  Marketplace, which can consolidate spend onto an AWS invoice.
+notes: >-
+  Per-shipment rates and tier thresholds are sales-negotiated; verify against
+  the customer agreement (or AWS Marketplace listing) on reconciliation.
+sources:
+- https://www.portcast.io/container-tracking-api
+- https://aws.amazon.com/marketplace/pp/prodview-qfvxj56hpmtue
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Portcast
+serviceCategory: Supply Chain and Logistics
+billingModel:
+  pricingCategory: Subscription-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+focusColumns:
+  ServiceName: Portcast Container Tracking API
+  ServiceCategory: Supply Chain and Logistics
+  ProviderName: Portcast
+  PublisherName: Portcast
+  InvoiceIssuerName: Portcast
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Subscription-Based
+meters:
+- name: tracked_shipments
+  description: Shipments / containers tracked during the billing period, the primary metered unit.
+  unit: shipments
+  aggregation: sum
+  dimensions:
+  - account
+  - carrier
+- name: api_requests
+  description: API calls made against the tracking and detail endpoints.
+  unit: requests
+  aggregation: sum
+  dimensions:
+  - account
+  - endpoint
+- name: push_callbacks
+  description: Webhook (Push API) deliveries sent to registered callback_url endpoints.
+  unit: callbacks
+  aggregation: sum
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Tag API keys per workload/team; track tracked-shipment volume against the subscription commitment.
+- name: Allocation
+  description: Use the x-customer header / per-account flows to map spend to business units and customers.
+- name: Optimization
+  description: Prefer the Push API callback over polling to reduce request volume; archive bookmarks (DELETE) once shipments are delivered to free tracked-shipment capacity.
+- name: Accountability
+  description: Assign owners per integration; review tracked-shipment burn monthly against the negotiated plan.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

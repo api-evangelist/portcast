@@ -1,0 +1,87 @@
+aid: portcast
+name: Portcast
+review:
+  question: Does Portcast expose a documented public WebSocket API?
+  answer: false
+  date: '2026-06-21'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    Portcast's documented event-driven surface is the Push API: an HTTP
+    webhook. When a tracking shipment is uploaded with a `callback_url`,
+    Portcast POSTs the full tracking JSON object to that HTTPS endpoint
+    whenever there are updates. This is a server-to-client HTTP callback,
+    not a WebSocket and not a persistent stream, so no AsyncAPI document
+    was authored. The webhook is modeled as an OpenAPI request field
+    (callback_url) on the two upload operations.
+findings:
+  summary: |
+    Portcast does not publish a documented public WebSocket API. The
+    Container Tracking API is a REST (HTTPS) API under
+    https://api.portcast.io/api/v2/eta, authenticated with an `x-api-key`
+    header. Its real-time delivery mechanism is the Push API: an outbound
+    HTTP webhook to a customer-registered `callback_url`, delivering the
+    same tracking JSON object on every update. No realtime, bidirectional,
+    or streaming WebSocket (ws:// or wss://) endpoint is documented for
+    tracking, vessel schedules, or any other Portcast product as of the
+    review date.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.portcast.io/api/v2/eta
+      documented: true
+    - protocol: Webhook
+      scheme: https
+      note: >-
+        Push API. Portcast POSTs the tracking JSON object to a
+        customer-supplied callback_url on each update. Outbound HTTP
+        callback, not WebSocket.
+      documented: true
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in Portcast's Stoplight API reference or knowledge base as of the review date.
+  authentication:
+    scheme: apiKey
+    in: header
+    name: x-api-key
+    note: Optional Enterprise x-customer header selects the sub-account / flow.
+  endpointsConfirmedRest:
+    - POST   https://api.portcast.io/api/v2/eta/bill-of-lading-bookmarks
+    - DELETE https://api.portcast.io/api/v2/eta/bill-of-lading-bookmarks/{bookmark_id}
+    - POST   https://api.portcast.io/api/v2/eta/booking
+    - GET    https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks
+    - GET    https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}
+    - GET    https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/container_route
+    - GET    https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/risks
+    - GET    https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/import_export_plan
+    - GET    https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations
+    - POST   https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations
+    - PUT    https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations
+    - DELETE https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations
+    - GET    https://api.portcast.io/api/v2/eta/scac
+sources:
+  - url: https://portcast.stoplight.io/docs/portcast-api/
+    type: APIReference
+    note: OpenAPI 3.1 spec (Container Tracking API v2.0); REST base https://api.portcast.io/api/v2/eta; x-api-key auth. No WebSocket.
+  - url: https://portcast.stoplight.io/docs/portcast-api/dxd93fedun52o-push-api
+    type: Documentation
+    note: Push API delivers updates via an outbound HTTP POST to a customer callback_url; not WebSocket.
+  - url: https://portcast.stoplight.io/docs/portcast-api/5xrqljlsknrvm-input-data-guide
+    type: Documentation
+    note: Input data guide for uploading shipments by container number, bill of lading, or booking plus carrier SCAC.
+  - url: https://kb.portcast.io
+    type: Documentation
+    note: Knowledge base; getting started with the Portcast API. No WebSocket surface mentioned.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. The only event-driven mechanism is
+    the Push API HTTP webhook (callback_url), which is modeled as an OpenAPI
+    request field on the upload operations rather than as a streaming
+    AsyncAPI channel. The Webhooks (Push API) capability is represented as a
+    distinct API entry in apis.yml.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

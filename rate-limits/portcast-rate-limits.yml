@@ -1,0 +1,54 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Portcast
+providerId: portcast
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Supply Chain
+- Container Tracking
+- Logistics
+- Predictive ETA
+- Ocean Freight
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Portcast authenticates the Container Tracking API with an x-api-key header
+  issued per account. Request throttling and tracked-shipment quotas are
+  governed by the negotiated subscription rather than a public per-minute rate
+  table. To avoid polling pressure, Portcast recommends registering a
+  callback_url (Push API) so tracking updates are delivered as webhooks instead
+  of repeated GET requests. Specific numeric rate limits are not publicly
+  documented and are not reconciled in this artifact.
+notes: >-
+  Confirm per-account request throttling, concurrent upload limits, and
+  tracked-shipment quotas with Portcast on reconciliation. Prefer the Push API
+  callback over polling the tracking endpoints.
+sources:
+- https://portcast.stoplight.io/docs/portcast-api/
+- https://portcast.stoplight.io/docs/portcast-api/dxd93fedun52o-push-api
+- https://kb.portcast.io
+responseCodes:
+  throttled: 429
+limits:
+- name: API Requests
+  scope: account
+  metric: requests
+  limit: see provider agreement
+  notes: Per-account request throttling governed by subscription; not publicly published.
+- name: Tracked Shipments
+  scope: account
+  metric: shipments
+  limit: per subscription
+  notes: Volume of concurrently tracked shipments/containers is set by the plan.
+policies:
+- name: Push Over Poll
+  description: Register an HTTPS callback_url so updates arrive as webhooks instead of polling the tracking endpoints.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After on 429 responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

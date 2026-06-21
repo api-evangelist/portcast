@@ -1,0 +1,216 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Portcast Container Tracking API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "name": "x-api-key",
+      "in": "header",
+      "value": "{{apiKey}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tracking Upload",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload using Container Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.portcast.io/api/v2/eta/bill-of-lading-bookmarks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start tracking an ocean container. Provide the container number, the carrier SCAC code (or AUTO), and optionally the master bill of lading / booking number and an HTTPS callback_url for Push updates. Returns the created bill-of-lading bookmark including the bookmark id used to fetch tracking data."
+        },
+        {
+          "info": {
+            "name": "Upload using Booking / Bill of Lading",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.portcast.io/api/v2/eta/booking",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start tracking using a booking or bill of lading number without a container number; Portcast discovers the containers on the document. Returns discovered containers, booking details, locations, vessels, and the resolved route."
+        },
+        {
+          "info": {
+            "name": "Archive Bookmark ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.portcast.io/api/v2/eta/bill-of-lading-bookmarks/{bookmark_id}"
+          },
+          "docs": "Archive a bookmark to stop tracking the shipment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tracking Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Tracking data by Container, Bill of Lading or Carrier",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks"
+          },
+          "docs": "List tracking objects filtered by container number, bill of lading number, and/or carrier SCAC, with cursor pagination via _start_after."
+        },
+        {
+          "info": {
+            "name": "Fetch tracking data by Bookmark ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}"
+          },
+          "docs": "Fetch the full tracking object for a bookmark, including standardized container milestone events, per-leg sailing info with predicted and scheduled ETA/ETD, transport plan, delays, container metadata, and CO2 emissions."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Container Detail",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Container Route API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/container_route"
+          },
+          "docs": "Return the actual and optimal ocean route for a bookmark, with origin and destination port coordinates, per-leg geometry, and the current vessel."
+        },
+        {
+          "info": {
+            "name": "Container Risks API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/risks"
+          },
+          "docs": "Return identified risks for a tracked container."
+        },
+        {
+          "info": {
+            "name": "Container Terminal Data API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/import_export_plan"
+          },
+          "docs": "Return the export plan (ERD, port cutoffs, gate-in) and import plan (discharge, last free day, gate-out, demurrage, pickup appointment) for a tracked container."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Augmentation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch Container Augmentation Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations"
+          },
+          "docs": "Fetch Container Augmentation Data"
+        },
+        {
+          "info": {
+            "name": "Upload new Container Augmentation Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upload new Container Augmentation Data"
+        },
+        {
+          "info": {
+            "name": "Update existing Container Augmentation Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update existing Container Augmentation Data"
+        },
+        {
+          "info": {
+            "name": "Delete Container Augmentation Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations"
+          },
+          "docs": "Delete Container Augmentation Data"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reference",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Supported Carrier SCAC List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.portcast.io/api/v2/eta/scac"
+          },
+          "docs": "Return the list of supported carriers with SCAC codes, synonyms, bill of lading prefixes, and the upload types supported per carrier."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+aid: portcast
+url: https://raw.githubusercontent.com/api-evangelist/portcast/refs/heads/main/apis.yml
+name: Portcast
+kind: company
+description: Portcast is a predictive supply-chain visibility platform whose Container
+  Tracking API delivers the full journey of an ocean container - milestones, vessel
+  schedules, port codes, and machine-learning predicted ETAs and ETDs - in a single
+  JSON response, tracked by container number, bill of lading, or booking number plus
+  carrier SCAC, with push (webhook) callbacks on every update.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Supply Chain
+- Container Tracking
+- Logistics
+- Predictive ETA
+- Ocean Freight
+created: '2026-06-21'
+modified: '2026-06-21'
+specificationVersion: '0.19'
+apis:
+- aid: portcast:container-tracking-api
+  name: Portcast Container Tracking API
+  tags:
+  - Container Tracking
+  - Ocean Freight
+  - Milestones
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://portcast.stoplight.io/docs/portcast-api/
+  baseURL: https://api.portcast.io/api/v2/eta
+  properties:
+  - url: https://portcast.stoplight.io/docs/portcast-api/5xrqljlsknrvm-input-data-guide
+    type: Documentation
+  - url: https://portcast.stoplight.io/docs/portcast-api/e120e68fcdc40-upload-using-container-number
+    type: APIReference
+  - url: openapi/portcast-openapi.yml
+    type: OpenAPI
+  description: Upload an ocean shipment by container number, bill of lading, or booking
+    number plus carrier SCAC and retrieve the full container journey - standardized
+    milestone events, terminal details, transport plan, delays, and CO2 emissions -
+    in one JSON response, with optional callback_url push updates.
+- aid: portcast:predictive-eta-api
+  name: Portcast Predictive ETA API
+  tags:
+  - Predictive ETA
+  - Machine Learning
+  - Ocean Freight
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.portcast.io/predictive-visibility
+  baseURL: https://api.portcast.io/api/v2/eta
+  properties:
+  - url: https://portcast.stoplight.io/docs/portcast-api/7p466hav2ds7x-container-events-data-types
+    type: Documentation
+  - url: openapi/portcast-openapi.yml
+    type: OpenAPI
+  description: Machine-learning predicted ETA and ETD per leg surfaced through the
+    tracking response sailing_info_tracking - predicted arrival and departure local
+    times alongside scheduled and actual times, plus live AIS vessel position.
+- aid: portcast:vessel-schedules-api
+  name: Portcast Vessel Schedules API
+  tags:
+  - Vessel Schedules
+  - AIS
+  - Voyage
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.portcast.io/ocean-vessel-tracking-api
+  baseURL: https://api.portcast.io/api/v2/eta
+  properties:
+  - url: https://www.portcast.io/ocean-vessel-tracking-api
+    type: Documentation
+  - url: openapi/portcast-openapi.yml
+    type: OpenAPI
+  description: Vessel schedule, voyage, and live AIS position data surfaced through
+    the tracking response - vessel name, IMO, MMSI, flag, inbound and outbound voyage
+    numbers, and scheduled arrival and departure times at each port on the route.
+- aid: portcast:webhooks-api
+  name: Portcast Webhooks (Push API)
+  tags:
+  - Webhooks
+  - Push
+  - Callbacks
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://portcast.stoplight.io/docs/portcast-api/dxd93fedun52o-push-api
+  baseURL: https://api.portcast.io/api/v2/eta
+  properties:
+  - url: https://portcast.stoplight.io/docs/portcast-api/dxd93fedun52o-push-api
+    type: Documentation
+  - url: openapi/portcast-openapi.yml
+    type: OpenAPI
+  description: Register an HTTPS callback_url on a tracking upload and Portcast pushes
+    the full tracking JSON object to your endpoint whenever container milestones or
+    predictions are updated - eliminating polling.
+common:
+- type: GitHubOrganization
+  url: https://github.com/portcast
+- type: LinkedIn
+  url: https://www.linkedin.com/company/portcast
+- type: Website
+  url: https://www.portcast.io/
+- type: Documentation
+  url: https://portcast.stoplight.io/docs/portcast-api/
+- type: Plans
+  url: plans/portcast-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/portcast-rate-limits.yml
+- type: FinOps
+  url: finops/portcast-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

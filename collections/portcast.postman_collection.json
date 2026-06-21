@@ -1,0 +1,680 @@
+{
+  "item": [
+    {
+      "id": "b5d81a69-2fa1-472c-bf18-3fb012764aac",
+      "name": "Tracking Upload",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d83e1436-d57a-4872-b18f-e58c6b6843d6",
+          "name": "Upload using Container Number",
+          "request": {
+            "name": "Upload using Container Number",
+            "description": {
+              "content": "Start tracking an ocean container. Provide the container number, the carrier SCAC code (or AUTO), and optionally the master bill of lading / booking number and an HTTPS callback_url for Push updates. Returns the created bill-of-lading bookmark including the bookmark id used to fetch tracking data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/eta/bill-of-lading-bookmarks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "eta",
+                "bill-of-lading-bookmarks"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "58bffe81-e6f4-4fc3-b38f-d7fb982881ad",
+          "name": "Upload using Booking / Bill of Lading",
+          "request": {
+            "name": "Upload using Booking / Bill of Lading",
+            "description": {
+              "content": "Start tracking using a booking or bill of lading number without a container number; Portcast discovers the containers on the document. Returns discovered containers, booking details, locations, vessels, and the resolved route.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/eta/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "eta",
+                "booking"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "d452d476-fa80-41ec-94f9-8effc3fabb50",
+          "name": "Archive Bookmark ID",
+          "request": {
+            "name": "Archive Bookmark ID",
+            "description": {
+              "content": "Archive a bookmark to stop tracking the shipment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/eta/bill-of-lading-bookmarks/{bookmark_id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "eta",
+                "bill-of-lading-bookmarks",
+                "{bookmark_id}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "bookmark_id",
+                  "value": ""
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "id": "7bf2dfcd-7abe-4dd1-a134-b5f590fe64e1",
+      "name": "Tracking Data",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "654cc47c-d464-4eec-928e-faea50de6425",
+          "name": "List Tracking data by Container, Bill of Lading or Carrier",
+          "request": {
+            "name": "List Tracking data by Container, Bill of Lading or Carrier",
+            "description": {
+              "content": "List tracking objects filtered by container number, bill of lading number, and/or carrier SCAC, with cursor pagination via _start_after.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/eta/tracking/bill-of-lading-bookmarks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "eta",
+                "tracking",
+                "bill-of-lading-bookmarks"
+              ],
+              "query": [
+                {
+                  "key": "carrier_no",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "bl_no",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "cntr_no",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "_start_after",
+                  "value": "",
+                  "disabled": true
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": []
+        },
+        {
+          "id": "e30fe24e-46ad-49f3-aaf4-0820dd50a49b",
+          "name": "Fetch tracking data by Bookmark ID",
+          "request": {
+            "name": "Fetch tracking data by Bookmark ID",
+            "description": {
+              "content": "Fetch the full tracking object for a bookmark, including standardized container milestone events, per-leg sailing info with predicted and scheduled ETA/ETD, transport plan, delays, container metadata, and CO2 emissions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "eta",
+                "tracking",
+                "bill-of-lading-bookmarks",
+                "{bookmark_id}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "bookmark_id",
+                  "value": ""
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "id": "8528dd26-0147-46d9-8c82-2ce60860a9ea",
+      "name": "Container Detail",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7eaa6a55-e562-4ad7-9931-b77834c0fffc",
+          "name": "Container Route API",
+          "request": {
+            "name": "Container Route API",
+            "description": {
+              "content": "Return the actual and optimal ocean route for a bookmark, with origin and destination port coordinates, per-leg geometry, and the current vessel.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/container_route",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "eta",
+                "tracking",
+                "bill-of-lading-bookmarks",
+                "{bookmark_id}",
+                "container_route"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "bookmark_id",
+                  "value": ""
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": []
+        },
+        {
+          "id": "dece08d4-937a-45af-9d05-78e4657e7a7a",
+          "name": "Container Risks API",
+          "request": {
+            "name": "Container Risks API",
+            "description": {
+              "content": "Return identified risks for a tracked container.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/risks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "eta",
+                "tracking",
+                "bill-of-lading-bookmarks",
+                "{bookmark_id}",
+                "risks"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "bookmark_id",
+                  "value": ""
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": []
+        },
+        {
+          "id": "9db888e6-1c53-4647-a92a-492a3e408658",
+          "name": "Container Terminal Data API",
+          "request": {
+            "name": "Container Terminal Data API",
+            "description": {
+              "content": "Return the export plan (ERD, port cutoffs, gate-in) and import plan (discharge, last free day, gate-out, demurrage, pickup appointment) for a tracked container.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/import_export_plan",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "eta",
+                "tracking",
+                "bill-of-lading-bookmarks",
+                "{bookmark_id}",
+                "import_export_plan"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "bookmark_id",
+                  "value": ""
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "id": "753c33a4-c7db-439d-b1d7-069bc1be03fe",
+      "name": "Augmentation",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "66009829-400a-4f86-9864-90bad83446d7",
+          "name": "Fetch Container Augmentation Data",
+          "request": {
+            "name": "Fetch Container Augmentation Data",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "eta",
+                "tracking",
+                "bill-of-lading-bookmarks",
+                "{bookmark_id}",
+                "augmentations"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "bookmark_id",
+                  "value": ""
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": []
+        },
+        {
+          "id": "66e9e001-14d2-4f4c-8d7e-0778c5435acb",
+          "name": "Upload new Container Augmentation Data",
+          "request": {
+            "name": "Upload new Container Augmentation Data",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "eta",
+                "tracking",
+                "bill-of-lading-bookmarks",
+                "{bookmark_id}",
+                "augmentations"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "bookmark_id",
+                  "value": ""
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "55cb2861-2b36-4455-a9cb-1702cc1eda0d",
+          "name": "Update existing Container Augmentation Data",
+          "request": {
+            "name": "Update existing Container Augmentation Data",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "eta",
+                "tracking",
+                "bill-of-lading-bookmarks",
+                "{bookmark_id}",
+                "augmentations"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "bookmark_id",
+                  "value": ""
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "e911142f-8a11-4741-998d-0c5e23740e4e",
+          "name": "Delete Container Augmentation Data",
+          "request": {
+            "name": "Delete Container Augmentation Data",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/eta/tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "eta",
+                "tracking",
+                "bill-of-lading-bookmarks",
+                "{bookmark_id}",
+                "augmentations"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "bookmark_id",
+                  "value": ""
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "id": "6a269119-bda6-4c3b-8482-19e81664ab31",
+      "name": "Reference",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a696da8e-7e1d-48d1-8e51-2126d1674472",
+          "name": "Supported Carrier SCAC List",
+          "request": {
+            "name": "Supported Carrier SCAC List",
+            "description": {
+              "content": "Return the list of supported carriers with SCAC codes, synonyms, bill of lading prefixes, and the upload types supported per carrier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/eta/scac",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "eta",
+                "scac"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.portcast.io/api/v2/eta",
+      "key": "baseUrl"
+    },
+    {
+      "type": "string",
+      "value": "",
+      "key": "apiKey"
+    }
+  ],
+  "info": {
+    "_postman_id": "27181bdd-4b01-4705-bb38-b709e0be8778",
+    "name": "Portcast Container Tracking API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Portcast Container Tracking API returns the full journey of an ocean container - standardized milestone events, vessel schedules, port codes, transport plan, delays, terminal data, CO2 emissions, and machine-learning predicted ETAs and ETDs - in a single JSON response. Shipments are tracked by container number, by booking or bill of lading number, plus a carrier SCAC code (or AUTO for auto-detection). An optional callback_url registers a Push (webhook) endpoint that Portcast posts the tracking object to on every update.\n\nContact Support:\n Name: Portcast Support\n URL: https://kb.portcast.io",
+      "type": "text/plain"
+    }
+  }
+}

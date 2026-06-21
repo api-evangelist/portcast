@@ -1,0 +1,945 @@
+openapi: 3.0.1
+info:
+  title: Portcast Container Tracking API
+  description: >-
+    Portcast Container Tracking API returns the full journey of an ocean
+    container - standardized milestone events, vessel schedules, port codes,
+    transport plan, delays, terminal data, CO2 emissions, and machine-learning
+    predicted ETAs and ETDs - in a single JSON response. Shipments are tracked
+    by container number, by booking or bill of lading number, plus a carrier
+    SCAC code (or AUTO for auto-detection). An optional callback_url registers a
+    Push (webhook) endpoint that Portcast posts the tracking object to on every
+    update.
+  termsOfService: https://www.portcast.io/terms-of-use
+  contact:
+    name: Portcast Support
+    url: https://kb.portcast.io
+  version: '2.0'
+servers:
+  - url: https://api.portcast.io/api/v2/eta
+    description: Production
+security:
+  - x-api-key: []
+tags:
+  - name: Tracking Upload
+    description: Start tracking an ocean shipment.
+  - name: Tracking Data
+    description: Retrieve tracking results, predicted ETA/ETD, and milestones.
+  - name: Container Detail
+    description: Container route, risks, and terminal data sub-APIs.
+  - name: Augmentation
+    description: Manage custom augmentation data on a bookmark.
+  - name: Reference
+    description: Supported carrier SCAC reference data.
+paths:
+  /bill-of-lading-bookmarks:
+    post:
+      operationId: uploadUsingContainerNumber
+      tags:
+        - Tracking Upload
+      summary: Upload using Container Number
+      description: >-
+        Start tracking an ocean container. Provide the container number, the
+        carrier SCAC code (or AUTO), and optionally the master bill of lading /
+        booking number and an HTTPS callback_url for Push updates. Returns the
+        created bill-of-lading bookmark including the bookmark id used to fetch
+        tracking data.
+      parameters:
+        - $ref: '#/components/parameters/XCustomer'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContainerUploadRequest'
+      responses:
+        '200':
+          description: Bookmark created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillOfLadingBookmarkResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /booking:
+    post:
+      operationId: uploadUsingBooking
+      tags:
+        - Tracking Upload
+      summary: Upload using Booking / Bill of Lading
+      description: >-
+        Start tracking using a booking or bill of lading number without a
+        container number; Portcast discovers the containers on the document.
+        Returns discovered containers, booking details, locations, vessels, and
+        the resolved route.
+      parameters:
+        - $ref: '#/components/parameters/XCustomer'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingUploadRequest'
+      responses:
+        '200':
+          description: Booking accepted and containers discovered.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingUploadResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /bill-of-lading-bookmarks/{bookmark_id}:
+    delete:
+      operationId: archiveBookmark
+      tags:
+        - Tracking Upload
+      summary: Archive Bookmark ID
+      description: Archive a bookmark to stop tracking the shipment.
+      parameters:
+        - $ref: '#/components/parameters/BookmarkId'
+        - $ref: '#/components/parameters/XCustomer'
+      responses:
+        '200':
+          description: Bookmark archived.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tracking/bill-of-lading-bookmarks:
+    get:
+      operationId: listTrackingData
+      tags:
+        - Tracking Data
+      summary: List Tracking data by Container, Bill of Lading or Carrier
+      description: >-
+        List tracking objects filtered by container number, bill of lading
+        number, and/or carrier SCAC, with cursor pagination via _start_after.
+      parameters:
+        - name: carrier_no
+          in: query
+          schema:
+            type: string
+          description: Carrier SCAC code or synonym.
+        - name: bl_no
+          in: query
+          schema:
+            type: string
+          description: Master bill of lading or booking number.
+        - name: cntr_no
+          in: query
+          schema:
+            type: string
+          description: Container number (ISO 6346).
+        - name: _start_after
+          in: query
+          schema:
+            type: string
+          description: Pagination cursor returned by a previous page.
+        - $ref: '#/components/parameters/XCustomer'
+      responses:
+        '200':
+          description: A page of tracking objects.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  obj_list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TrackingObject'
+                  _ended_at:
+                    type: string
+                    description: Pagination cursor for the next page.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tracking/bill-of-lading-bookmarks/{bookmark_id}:
+    get:
+      operationId: fetchTrackingData
+      tags:
+        - Tracking Data
+      summary: Fetch tracking data by Bookmark ID
+      description: >-
+        Fetch the full tracking object for a bookmark, including standardized
+        container milestone events, per-leg sailing info with predicted and
+        scheduled ETA/ETD, transport plan, delays, container metadata, and CO2
+        emissions.
+      parameters:
+        - $ref: '#/components/parameters/BookmarkId'
+        - $ref: '#/components/parameters/XCustomer'
+      responses:
+        '200':
+          description: Full tracking object.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  obj:
+                    $ref: '#/components/schemas/TrackingObject'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tracking/bill-of-lading-bookmarks/{bookmark_id}/container_route:
+    get:
+      operationId: getContainerRoute
+      tags:
+        - Container Detail
+      summary: Container Route API
+      description: >-
+        Return the actual and optimal ocean route for a bookmark, with origin
+        and destination port coordinates, per-leg geometry, and the current
+        vessel.
+      parameters:
+        - $ref: '#/components/parameters/BookmarkId'
+        - $ref: '#/components/parameters/XCustomer'
+      responses:
+        '200':
+          description: Container route.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerRouteResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tracking/bill-of-lading-bookmarks/{bookmark_id}/risks:
+    get:
+      operationId: getContainerRisks
+      tags:
+        - Container Detail
+      summary: Container Risks API
+      description: Return identified risks for a tracked container.
+      parameters:
+        - $ref: '#/components/parameters/BookmarkId'
+        - $ref: '#/components/parameters/XCustomer'
+      responses:
+        '200':
+          description: Container risks.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  risks:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        risk_code:
+                          type: string
+                        description:
+                          type: string
+                        last_updated:
+                          type: string
+                        metadata:
+                          type: object
+                          additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tracking/bill-of-lading-bookmarks/{bookmark_id}/import_export_plan:
+    get:
+      operationId: getContainerTerminalData
+      tags:
+        - Container Detail
+      summary: Container Terminal Data API
+      description: >-
+        Return the export plan (ERD, port cutoffs, gate-in) and import plan
+        (discharge, last free day, gate-out, demurrage, pickup appointment) for
+        a tracked container.
+      parameters:
+        - $ref: '#/components/parameters/BookmarkId'
+        - $ref: '#/components/parameters/XCustomer'
+      responses:
+        '200':
+          description: Terminal data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportExportPlanResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations:
+    get:
+      operationId: fetchAugmentation
+      tags:
+        - Augmentation
+      summary: Fetch Container Augmentation Data
+      parameters:
+        - $ref: '#/components/parameters/BookmarkId'
+        - $ref: '#/components/parameters/XCustomer'
+      responses:
+        '200':
+          description: Augmentation data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Augmentation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: uploadAugmentation
+      tags:
+        - Augmentation
+      summary: Upload new Container Augmentation Data
+      parameters:
+        - $ref: '#/components/parameters/BookmarkId'
+        - $ref: '#/components/parameters/XCustomer'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Augmentation'
+      responses:
+        '200':
+          description: Augmentation created.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    put:
+      operationId: updateAugmentation
+      tags:
+        - Augmentation
+      summary: Update existing Container Augmentation Data
+      parameters:
+        - $ref: '#/components/parameters/BookmarkId'
+        - $ref: '#/components/parameters/XCustomer'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Augmentation'
+      responses:
+        '200':
+          description: Augmentation updated.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      operationId: deleteAugmentation
+      tags:
+        - Augmentation
+      summary: Delete Container Augmentation Data
+      parameters:
+        - $ref: '#/components/parameters/BookmarkId'
+        - $ref: '#/components/parameters/XCustomer'
+      responses:
+        '200':
+          description: Augmentation deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /scac:
+    get:
+      operationId: listCarrierScac
+      tags:
+        - Reference
+      summary: Supported Carrier SCAC List
+      description: >-
+        Return the list of supported carriers with SCAC codes, synonyms, bill of
+        lading prefixes, and the upload types supported per carrier.
+      responses:
+        '200':
+          description: Supported carrier SCAC list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarrierScac'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  securitySchemes:
+    x-api-key:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API key issued by Portcast, sent in the x-api-key request header.
+  parameters:
+    BookmarkId:
+      name: bookmark_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The bill-of-lading bookmark id returned by an upload call.
+    XCustomer:
+      name: x-customer
+      in: header
+      required: false
+      schema:
+        type: string
+      description: >-
+        Enterprise-only header indicating which sub-account / flow the call
+        applies to.
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+  schemas:
+    ContainerUploadRequest:
+      type: object
+      required:
+        - cntr_no
+        - carrier_no
+      properties:
+        cntr_no:
+          type: string
+          description: Container number (ISO 6346).
+        carrier_no:
+          type: string
+          description: Carrier SCAC code or synonym; use AUTO to auto-detect.
+        bl_no:
+          type: string
+          description: Master bill of lading or booking number.
+        callback_url:
+          type: string
+          format: uri
+          description: >-
+            HTTPS endpoint Portcast posts the tracking JSON object to whenever
+            there are updates (Push API).
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Optional augmentation data attached to the bookmark.
+    BookingUploadRequest:
+      type: object
+      required:
+        - doc_no
+        - doc_type
+        - carrier_no
+      properties:
+        doc_no:
+          type: string
+          description: Booking or bill of lading number.
+        doc_type:
+          type: string
+          enum:
+            - BK
+            - BL
+          description: BK for booking, BL for bill of lading.
+        carrier_no:
+          type: string
+          description: Carrier SCAC code or synonym; use AUTO to auto-detect.
+        callback_url:
+          type: string
+          format: uri
+          description: HTTPS endpoint for Push updates.
+        custom_fields:
+          type: object
+          additionalProperties: true
+    BillOfLadingBookmark:
+      type: object
+      properties:
+        id:
+          type: string
+        bl_no:
+          type: string
+        carrier_no:
+          type: string
+        cntr_no:
+          type: string
+        derived_carrier_no:
+          type: string
+        org_id:
+          type: string
+        created:
+          type: string
+        updated:
+          type: string
+        deleted:
+          type: boolean
+        system_deleted:
+          type: boolean
+        status_info:
+          type: object
+          properties:
+            code:
+              type: string
+            metadata:
+              type: object
+              additionalProperties: true
+    BillOfLadingBookmarkResponse:
+      type: object
+      properties:
+        obj:
+          $ref: '#/components/schemas/BillOfLadingBookmark'
+    BookingUploadResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        containers:
+          type: array
+          items:
+            type: string
+          description: Container numbers discovered on the document.
+        booking_details:
+          type: object
+          properties:
+            doc_number:
+              type: string
+            doc_type:
+              type: string
+            carrier_no:
+              type: string
+            booking_container_qty:
+              type: array
+              items:
+                type: object
+                additionalProperties: true
+            updated:
+              type: string
+        response:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillOfLadingBookmark'
+        locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Location'
+        vessels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vessel'
+        route:
+          $ref: '#/components/schemas/Route'
+    TrackingObject:
+      type: object
+      description: Full tracking result for a bookmark.
+      properties:
+        bill_of_lading_bookmark:
+          $ref: '#/components/schemas/BillOfLadingBookmark'
+        success:
+          type: boolean
+        msg:
+          type: string
+        response_id:
+          type: string
+        org_id:
+          type: string
+        status_info:
+          type: object
+          additionalProperties: true
+        container_event_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerEvent'
+        sailing_info_tracking:
+          type: array
+          items:
+            $ref: '#/components/schemas/SailingInfoLeg'
+        transport_plan:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransportPlanLeg'
+        delay_lists:
+          type: array
+          items:
+            $ref: '#/components/schemas/Delay'
+        container_metadata:
+          type: object
+          properties:
+            cntr_no:
+              type: string
+            detail_st:
+              type: string
+              description: ISO size/type code.
+        co2_emissions:
+          type: object
+          properties:
+            total:
+              type: number
+            intensity:
+              type: number
+            ttw:
+              type: number
+            wtt:
+              type: number
+            distance:
+              type: number
+        custom_fields:
+          type: object
+          additionalProperties: true
+    ContainerEvent:
+      type: object
+      description: A standardized container milestone event.
+      properties:
+        id:
+          type: string
+        event_type_code:
+          type: string
+        event_type_name:
+          type: string
+          description: Portcast standardized event name.
+        event_raw:
+          type: string
+          description: Raw event text from the carrier.
+        event_time:
+          type: string
+          description: Actual event time.
+        event_time_estimated:
+          type: string
+          description: Estimated event time.
+        location_raw:
+          type: string
+        location_type_code:
+          type: string
+        location_type_name:
+          type: string
+        port_code:
+          type: string
+          description: UN/LOCODE.
+        port_name:
+          type: string
+        terminal_details:
+          type: object
+          properties:
+            terminal_code:
+              type: string
+            terminal_code_source:
+              type: string
+              description: BIC or SMDG.
+            terminal_name:
+              type: string
+        mode_of_transport:
+          type: string
+        vessel_name:
+          type: string
+        vessel_imo:
+          type: string
+        voyage_no:
+          type: string
+        is_custom_event:
+          type: boolean
+        created:
+          type: string
+        updated:
+          type: string
+    SailingInfoLeg:
+      type: object
+      description: Per-leg sailing schedule with predicted, scheduled, and actual times.
+      properties:
+        sailing_info:
+          type: object
+          properties:
+            pol:
+              type: string
+              description: Port of loading UN/LOCODE.
+            pod:
+              type: string
+              description: Port of discharge UN/LOCODE.
+            pol_name:
+              type: string
+            pod_name:
+              type: string
+            vessel_name:
+              type: string
+            imo:
+              type: string
+            vessel_flag:
+              type: string
+            inbound_voyage_no:
+              type: string
+            outbound_voyage_no:
+              type: string
+            vessel_leg:
+              type: string
+            pod_predicted_arrival_lt:
+              type: string
+              description: Machine-learning predicted arrival at POD (local time).
+            pod_predicted_departure_lt:
+              type: string
+            pol_predicted_arrival_lt:
+              type: string
+            pol_predicted_departure_lt:
+              type: string
+            pod_scheduled_arrival_from_schedule:
+              type: string
+            pol_scheduled_departure_from_schedule:
+              type: string
+            pod_actual_arrival_lt:
+              type: string
+            pol_actual_departure_lt:
+              type: string
+        ais:
+          type: object
+          description: Live AIS vessel position.
+          properties:
+            lat:
+              type: number
+            lon:
+              type: number
+            speed_nm:
+              type: number
+            course:
+              type: number
+            status:
+              type: string
+            timestamp_utc:
+              type: string
+            imo:
+              type: string
+        voyage_details:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        status_info:
+          type: object
+          additionalProperties: true
+    TransportPlanLeg:
+      type: object
+      properties:
+        leg:
+          type: integer
+        mode_of_transport:
+          type: string
+        source_location_code:
+          type: string
+        source_location_name:
+          type: string
+        destination_location_code:
+          type: string
+        destination_location_name:
+          type: string
+    Delay:
+      type: object
+      properties:
+        reason_code:
+          type: string
+          description: e.g. RLV for vessel rollover.
+        delay_description:
+          type: string
+        port_code:
+          type: string
+        port_name:
+          type: string
+        vessel_change:
+          type: boolean
+        rotation_change:
+          type: boolean
+        schedule_change:
+          type: boolean
+    Location:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        locode:
+          type: string
+        country:
+          type: string
+        country_code:
+          type: string
+        state:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+    Vessel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        imo:
+          type: string
+        mmsi:
+          type: string
+        call_sign:
+          type: string
+        flag:
+          type: string
+        voyage_no:
+          type: array
+          items:
+            type: string
+    Route:
+      type: object
+      properties:
+        prepol:
+          $ref: '#/components/schemas/RoutePoint'
+        pol:
+          $ref: '#/components/schemas/RoutePoint'
+        pot:
+          $ref: '#/components/schemas/RoutePoint'
+        pod:
+          $ref: '#/components/schemas/RoutePoint'
+        postpod:
+          $ref: '#/components/schemas/RoutePoint'
+    RoutePoint:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        date:
+          type: string
+        date_lt:
+          type: string
+        vessel:
+          $ref: '#/components/schemas/Vessel'
+        actual:
+          type: boolean
+    ContainerRouteResponse:
+      type: object
+      properties:
+        actual_route:
+          $ref: '#/components/schemas/RouteGeometry'
+        optimal_route:
+          $ref: '#/components/schemas/RouteGeometry'
+        current_vessel:
+          $ref: '#/components/schemas/Vessel'
+        bill_of_lading_bookmark:
+          $ref: '#/components/schemas/BillOfLadingBookmark'
+        last_updated:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    RouteGeometry:
+      type: object
+      properties:
+        POL:
+          $ref: '#/components/schemas/PortPoint'
+        POD:
+          $ref: '#/components/schemas/PortPoint'
+        route_details:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    PortPoint:
+      type: object
+      properties:
+        name:
+          type: string
+        unlocode:
+          type: string
+        lat:
+          type: number
+        lon:
+          type: number
+    ImportExportPlanResponse:
+      type: object
+      properties:
+        export_plan:
+          type: object
+          properties:
+            facility_code:
+              type: string
+            facility_name:
+              type: string
+            port_code:
+              type: string
+            port_name:
+              type: string
+            erd_standard:
+              type: string
+            erd_reefer:
+              type: string
+            port_cutoff_standard:
+              type: string
+            port_cutoff_reefer:
+              type: string
+            gate_in_date:
+              type: string
+            latest_eta:
+              type: string
+            latest_etd:
+              type: string
+            actual_arrival:
+              type: string
+            actual_departure:
+              type: string
+            vessel_name:
+              type: string
+            voyage_no:
+              type: string
+        import_plan:
+          type: object
+          properties:
+            discharge_date:
+              type: string
+            last_free_day:
+              type: string
+            gate_out_date:
+              type: string
+            empty_return_date:
+              type: string
+            pickup_appointment_date:
+              type: string
+            appointment_set:
+              type: boolean
+            ready_for_delivery:
+              type: boolean
+            container_status:
+              type: string
+            container_holds:
+              type: array
+              items:
+                type: string
+            demurrage_owed:
+              type: number
+            yard_location:
+              type: string
+            facility_code:
+              type: string
+            facility_name:
+              type: string
+            latest_eta:
+              type: string
+            vessel_name:
+              type: string
+            voyage_no:
+              type: string
+    Augmentation:
+      type: object
+      description: Custom augmentation data attached to a bookmark.
+      additionalProperties: true
+    CarrierScac:
+      type: object
+      properties:
+        scac:
+          type: string
+        name:
+          type: string
+        full_name:
+          type: string
+        scac_synonyms:
+          type: array
+          items:
+            type: string
+        bl_prefixes:
+          type: array
+          items:
+            type: string
+        supported_status:
+          type: string
+        supported_types:
+          type: object
+          properties:
+            cntr:
+              type: boolean
+            bl:
+              type: boolean
+            bkg:
+              type: boolean
+            bl_cntr:
+              type: boolean
+            bk_cntr:
+              type: boolean
+        updated:
+          type: string
