@@ -90,6 +90,10 @@ apis:
     the full tracking JSON object to your endpoint whenever container milestones or
     predictions are updated - eliminating polling.
 common:
+- type: DomainSecurity
+  url: security/portcast-domain-security.yml
+- type: Authentication
+  url: authentication/portcast-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/portcast
 - type: LinkedIn
