@@ -1,0 +1,182 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/portcast-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 13
+  by_action_class:
+    acting: 6
+    connected: 7
+  by_consequence:
+    write: 6
+    read: 7
+  human_in_the_loop_required: 0
+operations:
+- path: /bill-of-lading-bookmarks
+  method: post
+  operationId: uploadUsingContainerNumber
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /booking
+  method: post
+  operationId: uploadUsingBooking
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /bill-of-lading-bookmarks/{bookmark_id}
+  method: delete
+  operationId: archiveBookmark
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /tracking/bill-of-lading-bookmarks
+  method: get
+  operationId: listTrackingData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /tracking/bill-of-lading-bookmarks/{bookmark_id}
+  method: get
+  operationId: fetchTrackingData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /tracking/bill-of-lading-bookmarks/{bookmark_id}/container_route
+  method: get
+  operationId: getContainerRoute
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /tracking/bill-of-lading-bookmarks/{bookmark_id}/risks
+  method: get
+  operationId: getContainerRisks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /tracking/bill-of-lading-bookmarks/{bookmark_id}/import_export_plan
+  method: get
+  operationId: getContainerTerminalData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations
+  method: get
+  operationId: fetchAugmentation
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations
+  method: post
+  operationId: uploadAugmentation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations
+  method: put
+  operationId: updateAugmentation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations
+  method: delete
+  operationId: deleteAugmentation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /scac
+  method: get
+  operationId: listCarrierScac
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none

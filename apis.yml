@@ -90,6 +90,8 @@ apis:
     the full tracking JSON object to your endpoint whenever container milestones or
     predictions are updated - eliminating polling.
 common:
+- type: AgenticAccess
+  url: agentic-access/portcast-agentic-access.yml
 - type: DomainSecurity
   url: security/portcast-domain-security.yml
 - type: Authentication
