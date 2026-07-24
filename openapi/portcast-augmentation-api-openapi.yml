@@ -1,0 +1,124 @@
+openapi: 3.0.1
+info:
+  title: Portcast Container Tracking Augmentation API
+  description: Portcast Container Tracking API returns the full journey of an ocean container - standardized milestone events, vessel schedules, port codes, transport plan, delays, terminal data, CO2 emissions, and machine-learning predicted ETAs and ETDs - in a single JSON response. Shipments are tracked by container number, by booking or bill of lading number, plus a carrier SCAC code (or AUTO for auto-detection). An optional callback_url registers a Push (webhook) endpoint that Portcast posts the tracking object to on every update.
+  termsOfService: https://www.portcast.io/terms-of-use
+  contact:
+    name: Portcast Support
+    url: https://kb.portcast.io
+  version: '2.0'
+servers:
+- url: https://api.portcast.io/api/v2/eta
+  description: Production
+security:
+- x-api-key: []
+tags:
+- name: Augmentation
+  description: Manage custom augmentation data on a bookmark.
+paths:
+  /tracking/bill-of-lading-bookmarks/{bookmark_id}/augmentations:
+    get:
+      operationId: fetchAugmentation
+      tags:
+      - Augmentation
+      summary: Fetch Container Augmentation Data
+      parameters:
+      - $ref: '#/components/parameters/BookmarkId'
+      - $ref: '#/components/parameters/XCustomer'
+      responses:
+        '200':
+          description: Augmentation data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Augmentation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: uploadAugmentation
+      tags:
+      - Augmentation
+      summary: Upload new Container Augmentation Data
+      parameters:
+      - $ref: '#/components/parameters/BookmarkId'
+      - $ref: '#/components/parameters/XCustomer'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Augmentation'
+      responses:
+        '200':
+          description: Augmentation created.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    put:
+      operationId: updateAugmentation
+      tags:
+      - Augmentation
+      summary: Update existing Container Augmentation Data
+      parameters:
+      - $ref: '#/components/parameters/BookmarkId'
+      - $ref: '#/components/parameters/XCustomer'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Augmentation'
+      responses:
+        '200':
+          description: Augmentation updated.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      operationId: deleteAugmentation
+      tags:
+      - Augmentation
+      summary: Delete Container Augmentation Data
+      parameters:
+      - $ref: '#/components/parameters/BookmarkId'
+      - $ref: '#/components/parameters/XCustomer'
+      responses:
+        '200':
+          description: Augmentation deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    XCustomer:
+      name: x-customer
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Enterprise-only header indicating which sub-account / flow the call applies to.
+    BookmarkId:
+      name: bookmark_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The bill-of-lading bookmark id returned by an upload call.
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+  schemas:
+    Augmentation:
+      type: object
+      description: Custom augmentation data attached to a bookmark.
+      additionalProperties: true
+  securitySchemes:
+    x-api-key:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API key issued by Portcast, sent in the x-api-key request header.

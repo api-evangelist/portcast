@@ -1,0 +1,305 @@
+openapi: 3.0.1
+info:
+  title: Portcast Container Tracking Augmentation Tracking Upload API
+  description: Portcast Container Tracking API returns the full journey of an ocean container - standardized milestone events, vessel schedules, port codes, transport plan, delays, terminal data, CO2 emissions, and machine-learning predicted ETAs and ETDs - in a single JSON response. Shipments are tracked by container number, by booking or bill of lading number, plus a carrier SCAC code (or AUTO for auto-detection). An optional callback_url registers a Push (webhook) endpoint that Portcast posts the tracking object to on every update.
+  termsOfService: https://www.portcast.io/terms-of-use
+  contact:
+    name: Portcast Support
+    url: https://kb.portcast.io
+  version: '2.0'
+servers:
+- url: https://api.portcast.io/api/v2/eta
+  description: Production
+security:
+- x-api-key: []
+tags:
+- name: Tracking Upload
+  description: Start tracking an ocean shipment.
+paths:
+  /bill-of-lading-bookmarks:
+    post:
+      operationId: uploadUsingContainerNumber
+      tags:
+      - Tracking Upload
+      summary: Upload using Container Number
+      description: Start tracking an ocean container. Provide the container number, the carrier SCAC code (or AUTO), and optionally the master bill of lading / booking number and an HTTPS callback_url for Push updates. Returns the created bill-of-lading bookmark including the bookmark id used to fetch tracking data.
+      parameters:
+      - $ref: '#/components/parameters/XCustomer'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContainerUploadRequest'
+      responses:
+        '200':
+          description: Bookmark created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillOfLadingBookmarkResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /booking:
+    post:
+      operationId: uploadUsingBooking
+      tags:
+      - Tracking Upload
+      summary: Upload using Booking / Bill of Lading
+      description: Start tracking using a booking or bill of lading number without a container number; Portcast discovers the containers on the document. Returns discovered containers, booking details, locations, vessels, and the resolved route.
+      parameters:
+      - $ref: '#/components/parameters/XCustomer'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingUploadRequest'
+      responses:
+        '200':
+          description: Booking accepted and containers discovered.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingUploadResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /bill-of-lading-bookmarks/{bookmark_id}:
+    delete:
+      operationId: archiveBookmark
+      tags:
+      - Tracking Upload
+      summary: Archive Bookmark ID
+      description: Archive a bookmark to stop tracking the shipment.
+      parameters:
+      - $ref: '#/components/parameters/BookmarkId'
+      - $ref: '#/components/parameters/XCustomer'
+      responses:
+        '200':
+          description: Bookmark archived.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    BookingUploadResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        containers:
+          type: array
+          items:
+            type: string
+          description: Container numbers discovered on the document.
+        booking_details:
+          type: object
+          properties:
+            doc_number:
+              type: string
+            doc_type:
+              type: string
+            carrier_no:
+              type: string
+            booking_container_qty:
+              type: array
+              items:
+                type: object
+                additionalProperties: true
+            updated:
+              type: string
+        response:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillOfLadingBookmark'
+        locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Location'
+        vessels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vessel'
+        route:
+          $ref: '#/components/schemas/Route'
+    Vessel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        imo:
+          type: string
+        mmsi:
+          type: string
+        call_sign:
+          type: string
+        flag:
+          type: string
+        voyage_no:
+          type: array
+          items:
+            type: string
+    RoutePoint:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        date:
+          type: string
+        date_lt:
+          type: string
+        vessel:
+          $ref: '#/components/schemas/Vessel'
+        actual:
+          type: boolean
+    Route:
+      type: object
+      properties:
+        prepol:
+          $ref: '#/components/schemas/RoutePoint'
+        pol:
+          $ref: '#/components/schemas/RoutePoint'
+        pot:
+          $ref: '#/components/schemas/RoutePoint'
+        pod:
+          $ref: '#/components/schemas/RoutePoint'
+        postpod:
+          $ref: '#/components/schemas/RoutePoint'
+    BillOfLadingBookmarkResponse:
+      type: object
+      properties:
+        obj:
+          $ref: '#/components/schemas/BillOfLadingBookmark'
+    Location:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        locode:
+          type: string
+        country:
+          type: string
+        country_code:
+          type: string
+        state:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+    BillOfLadingBookmark:
+      type: object
+      properties:
+        id:
+          type: string
+        bl_no:
+          type: string
+        carrier_no:
+          type: string
+        cntr_no:
+          type: string
+        derived_carrier_no:
+          type: string
+        org_id:
+          type: string
+        created:
+          type: string
+        updated:
+          type: string
+        deleted:
+          type: boolean
+        system_deleted:
+          type: boolean
+        status_info:
+          type: object
+          properties:
+            code:
+              type: string
+            metadata:
+              type: object
+              additionalProperties: true
+    BookingUploadRequest:
+      type: object
+      required:
+      - doc_no
+      - doc_type
+      - carrier_no
+      properties:
+        doc_no:
+          type: string
+          description: Booking or bill of lading number.
+        doc_type:
+          type: string
+          enum:
+          - BK
+          - BL
+          description: BK for booking, BL for bill of lading.
+        carrier_no:
+          type: string
+          description: Carrier SCAC code or synonym; use AUTO to auto-detect.
+        callback_url:
+          type: string
+          format: uri
+          description: HTTPS endpoint for Push updates.
+        custom_fields:
+          type: object
+          additionalProperties: true
+    ContainerUploadRequest:
+      type: object
+      required:
+      - cntr_no
+      - carrier_no
+      properties:
+        cntr_no:
+          type: string
+          description: Container number (ISO 6346).
+        carrier_no:
+          type: string
+          description: Carrier SCAC code or synonym; use AUTO to auto-detect.
+        bl_no:
+          type: string
+          description: Master bill of lading or booking number.
+        callback_url:
+          type: string
+          format: uri
+          description: HTTPS endpoint Portcast posts the tracking JSON object to whenever there are updates (Push API).
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Optional augmentation data attached to the bookmark.
+  parameters:
+    XCustomer:
+      name: x-customer
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Enterprise-only header indicating which sub-account / flow the call applies to.
+    BookmarkId:
+      name: bookmark_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The bill-of-lading bookmark id returned by an upload call.
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+  securitySchemes:
+    x-api-key:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API key issued by Portcast, sent in the x-api-key request header.

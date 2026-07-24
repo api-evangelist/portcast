@@ -1,0 +1,367 @@
+openapi: 3.0.1
+info:
+  title: Portcast Container Tracking Augmentation Tracking Data API
+  description: Portcast Container Tracking API returns the full journey of an ocean container - standardized milestone events, vessel schedules, port codes, transport plan, delays, terminal data, CO2 emissions, and machine-learning predicted ETAs and ETDs - in a single JSON response. Shipments are tracked by container number, by booking or bill of lading number, plus a carrier SCAC code (or AUTO for auto-detection). An optional callback_url registers a Push (webhook) endpoint that Portcast posts the tracking object to on every update.
+  termsOfService: https://www.portcast.io/terms-of-use
+  contact:
+    name: Portcast Support
+    url: https://kb.portcast.io
+  version: '2.0'
+servers:
+- url: https://api.portcast.io/api/v2/eta
+  description: Production
+security:
+- x-api-key: []
+tags:
+- name: Tracking Data
+  description: Retrieve tracking results, predicted ETA/ETD, and milestones.
+paths:
+  /tracking/bill-of-lading-bookmarks:
+    get:
+      operationId: listTrackingData
+      tags:
+      - Tracking Data
+      summary: List Tracking data by Container, Bill of Lading or Carrier
+      description: List tracking objects filtered by container number, bill of lading number, and/or carrier SCAC, with cursor pagination via _start_after.
+      parameters:
+      - name: carrier_no
+        in: query
+        schema:
+          type: string
+        description: Carrier SCAC code or synonym.
+      - name: bl_no
+        in: query
+        schema:
+          type: string
+        description: Master bill of lading or booking number.
+      - name: cntr_no
+        in: query
+        schema:
+          type: string
+        description: Container number (ISO 6346).
+      - name: _start_after
+        in: query
+        schema:
+          type: string
+        description: Pagination cursor returned by a previous page.
+      - $ref: '#/components/parameters/XCustomer'
+      responses:
+        '200':
+          description: A page of tracking objects.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  obj_list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TrackingObject'
+                  _ended_at:
+                    type: string
+                    description: Pagination cursor for the next page.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tracking/bill-of-lading-bookmarks/{bookmark_id}:
+    get:
+      operationId: fetchTrackingData
+      tags:
+      - Tracking Data
+      summary: Fetch tracking data by Bookmark ID
+      description: Fetch the full tracking object for a bookmark, including standardized container milestone events, per-leg sailing info with predicted and scheduled ETA/ETD, transport plan, delays, container metadata, and CO2 emissions.
+      parameters:
+      - $ref: '#/components/parameters/BookmarkId'
+      - $ref: '#/components/parameters/XCustomer'
+      responses:
+        '200':
+          description: Full tracking object.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  obj:
+                    $ref: '#/components/schemas/TrackingObject'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    XCustomer:
+      name: x-customer
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Enterprise-only header indicating which sub-account / flow the call applies to.
+    BookmarkId:
+      name: bookmark_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The bill-of-lading bookmark id returned by an upload call.
+  schemas:
+    TrackingObject:
+      type: object
+      description: Full tracking result for a bookmark.
+      properties:
+        bill_of_lading_bookmark:
+          $ref: '#/components/schemas/BillOfLadingBookmark'
+        success:
+          type: boolean
+        msg:
+          type: string
+        response_id:
+          type: string
+        org_id:
+          type: string
+        status_info:
+          type: object
+          additionalProperties: true
+        container_event_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerEvent'
+        sailing_info_tracking:
+          type: array
+          items:
+            $ref: '#/components/schemas/SailingInfoLeg'
+        transport_plan:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransportPlanLeg'
+        delay_lists:
+          type: array
+          items:
+            $ref: '#/components/schemas/Delay'
+        container_metadata:
+          type: object
+          properties:
+            cntr_no:
+              type: string
+            detail_st:
+              type: string
+              description: ISO size/type code.
+        co2_emissions:
+          type: object
+          properties:
+            total:
+              type: number
+            intensity:
+              type: number
+            ttw:
+              type: number
+            wtt:
+              type: number
+            distance:
+              type: number
+        custom_fields:
+          type: object
+          additionalProperties: true
+    ContainerEvent:
+      type: object
+      description: A standardized container milestone event.
+      properties:
+        id:
+          type: string
+        event_type_code:
+          type: string
+        event_type_name:
+          type: string
+          description: Portcast standardized event name.
+        event_raw:
+          type: string
+          description: Raw event text from the carrier.
+        event_time:
+          type: string
+          description: Actual event time.
+        event_time_estimated:
+          type: string
+          description: Estimated event time.
+        location_raw:
+          type: string
+        location_type_code:
+          type: string
+        location_type_name:
+          type: string
+        port_code:
+          type: string
+          description: UN/LOCODE.
+        port_name:
+          type: string
+        terminal_details:
+          type: object
+          properties:
+            terminal_code:
+              type: string
+            terminal_code_source:
+              type: string
+              description: BIC or SMDG.
+            terminal_name:
+              type: string
+        mode_of_transport:
+          type: string
+        vessel_name:
+          type: string
+        vessel_imo:
+          type: string
+        voyage_no:
+          type: string
+        is_custom_event:
+          type: boolean
+        created:
+          type: string
+        updated:
+          type: string
+    BillOfLadingBookmark:
+      type: object
+      properties:
+        id:
+          type: string
+        bl_no:
+          type: string
+        carrier_no:
+          type: string
+        cntr_no:
+          type: string
+        derived_carrier_no:
+          type: string
+        org_id:
+          type: string
+        created:
+          type: string
+        updated:
+          type: string
+        deleted:
+          type: boolean
+        system_deleted:
+          type: boolean
+        status_info:
+          type: object
+          properties:
+            code:
+              type: string
+            metadata:
+              type: object
+              additionalProperties: true
+    SailingInfoLeg:
+      type: object
+      description: Per-leg sailing schedule with predicted, scheduled, and actual times.
+      properties:
+        sailing_info:
+          type: object
+          properties:
+            pol:
+              type: string
+              description: Port of loading UN/LOCODE.
+            pod:
+              type: string
+              description: Port of discharge UN/LOCODE.
+            pol_name:
+              type: string
+            pod_name:
+              type: string
+            vessel_name:
+              type: string
+            imo:
+              type: string
+            vessel_flag:
+              type: string
+            inbound_voyage_no:
+              type: string
+            outbound_voyage_no:
+              type: string
+            vessel_leg:
+              type: string
+            pod_predicted_arrival_lt:
+              type: string
+              description: Machine-learning predicted arrival at POD (local time).
+            pod_predicted_departure_lt:
+              type: string
+            pol_predicted_arrival_lt:
+              type: string
+            pol_predicted_departure_lt:
+              type: string
+            pod_scheduled_arrival_from_schedule:
+              type: string
+            pol_scheduled_departure_from_schedule:
+              type: string
+            pod_actual_arrival_lt:
+              type: string
+            pol_actual_departure_lt:
+              type: string
+        ais:
+          type: object
+          description: Live AIS vessel position.
+          properties:
+            lat:
+              type: number
+            lon:
+              type: number
+            speed_nm:
+              type: number
+            course:
+              type: number
+            status:
+              type: string
+            timestamp_utc:
+              type: string
+            imo:
+              type: string
+        voyage_details:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        status_info:
+          type: object
+          additionalProperties: true
+    Delay:
+      type: object
+      properties:
+        reason_code:
+          type: string
+          description: e.g. RLV for vessel rollover.
+        delay_description:
+          type: string
+        port_code:
+          type: string
+        port_name:
+          type: string
+        vessel_change:
+          type: boolean
+        rotation_change:
+          type: boolean
+        schedule_change:
+          type: boolean
+    TransportPlanLeg:
+      type: object
+      properties:
+        leg:
+          type: integer
+        mode_of_transport:
+          type: string
+        source_location_code:
+          type: string
+        source_location_name:
+          type: string
+        destination_location_code:
+          type: string
+        destination_location_name:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+  securitySchemes:
+    x-api-key:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API key issued by Portcast, sent in the x-api-key request header.

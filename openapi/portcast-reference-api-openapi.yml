@@ -1,0 +1,88 @@
+openapi: 3.0.1
+info:
+  title: Portcast Container Tracking Augmentation Reference API
+  description: Portcast Container Tracking API returns the full journey of an ocean container - standardized milestone events, vessel schedules, port codes, transport plan, delays, terminal data, CO2 emissions, and machine-learning predicted ETAs and ETDs - in a single JSON response. Shipments are tracked by container number, by booking or bill of lading number, plus a carrier SCAC code (or AUTO for auto-detection). An optional callback_url registers a Push (webhook) endpoint that Portcast posts the tracking object to on every update.
+  termsOfService: https://www.portcast.io/terms-of-use
+  contact:
+    name: Portcast Support
+    url: https://kb.portcast.io
+  version: '2.0'
+servers:
+- url: https://api.portcast.io/api/v2/eta
+  description: Production
+security:
+- x-api-key: []
+tags:
+- name: Reference
+  description: Supported carrier SCAC reference data.
+paths:
+  /scac:
+    get:
+      operationId: listCarrierScac
+      tags:
+      - Reference
+      summary: Supported Carrier SCAC List
+      description: Return the list of supported carriers with SCAC codes, synonyms, bill of lading prefixes, and the upload types supported per carrier.
+      responses:
+        '200':
+          description: Supported carrier SCAC list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarrierScac'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    CarrierScac:
+      type: object
+      properties:
+        scac:
+          type: string
+        name:
+          type: string
+        full_name:
+          type: string
+        scac_synonyms:
+          type: array
+          items:
+            type: string
+        bl_prefixes:
+          type: array
+          items:
+            type: string
+        supported_status:
+          type: string
+        supported_types:
+          type: object
+          properties:
+            cntr:
+              type: boolean
+            bl:
+              type: boolean
+            bkg:
+              type: boolean
+            bl_cntr:
+              type: boolean
+            bk_cntr:
+              type: boolean
+        updated:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+  securitySchemes:
+    x-api-key:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API key issued by Portcast, sent in the x-api-key request header.
