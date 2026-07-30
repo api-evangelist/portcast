@@ -7,7 +7,20 @@ description: Portcast is a predictive supply-chain visibility platform whose Con
   schedules, port codes, and machine-learning predicted ETAs and ETDs - in a single
   JSON response, tracked by container number, bill of lading, or booking number plus
   carrier SCAC, with push (webhook) callbacks on every update.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: enterprise
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/portcast.png
 tags:
 - Supply Chain
 - Container Tracking
@@ -18,77 +31,116 @@ created: '2026-06-21'
 modified: '2026-06-21'
 specificationVersion: '0.19'
 apis:
-- aid: portcast:container-tracking-api
-  name: Portcast Container Tracking API
-  tags:
-  - Container Tracking
-  - Ocean Freight
-  - Milestones
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: portcast:portcast-augmentation-api
+  name: Portcast Augmentation API
+  description: Manage custom augmentation data on a bookmark.
   humanURL: https://portcast.stoplight.io/docs/portcast-api/
   baseURL: https://api.portcast.io/api/v2/eta
-  properties:
-  - url: https://portcast.stoplight.io/docs/portcast-api/5xrqljlsknrvm-input-data-guide
-    type: Documentation
-  - url: https://portcast.stoplight.io/docs/portcast-api/e120e68fcdc40-upload-using-container-number
-    type: APIReference
-  - url: openapi/portcast-openapi.yml
-    type: OpenAPI
-  description: Upload an ocean shipment by container number, bill of lading, or booking
-    number plus carrier SCAC and retrieve the full container journey - standardized
-    milestone events, terminal details, transport plan, delays, and CO2 emissions -
-    in one JSON response, with optional callback_url push updates.
-- aid: portcast:predictive-eta-api
-  name: Portcast Predictive ETA API
   tags:
-  - Predictive ETA
-  - Machine Learning
-  - Ocean Freight
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.portcast.io/predictive-visibility
-  baseURL: https://api.portcast.io/api/v2/eta
+  - Augmentation
   properties:
-  - url: https://portcast.stoplight.io/docs/portcast-api/7p466hav2ds7x-container-events-data-types
-    type: Documentation
-  - url: openapi/portcast-openapi.yml
-    type: OpenAPI
-  description: Machine-learning predicted ETA and ETD per leg surfaced through the
-    tracking response sailing_info_tracking - predicted arrival and departure local
-    times alongside scheduled and actual times, plus live AIS vessel position.
-- aid: portcast:vessel-schedules-api
-  name: Portcast Vessel Schedules API
+  - type: OpenAPI
+    url: openapi/portcast-augmentation-api-openapi.yml
+  - type: Documentation
+    url: https://portcast.stoplight.io/docs/portcast-api/5xrqljlsknrvm-input-data-guide
+  - type: APIReference
+    url: >-
+      https://portcast.stoplight.io/docs/portcast-api/e120e68fcdc40-upload-using-container-number
+  - type: Documentation
+    url: >-
+      https://portcast.stoplight.io/docs/portcast-api/7p466hav2ds7x-container-events-data-types
+  - type: Documentation
+    url: https://www.portcast.io/ocean-vessel-tracking-api
+  - type: Documentation
+    url: https://portcast.stoplight.io/docs/portcast-api/dxd93fedun52o-push-api
+- aid: portcast:portcast-container-detail-api
+  name: Portcast Container Detail API
+  description: Container route, risks, and terminal data sub-APIs.
+  humanURL: https://portcast.stoplight.io/docs/portcast-api/
+  baseURL: https://api.portcast.io/api/v2/eta
   tags:
-  - Vessel Schedules
-  - AIS
-  - Voyage
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.portcast.io/ocean-vessel-tracking-api
-  baseURL: https://api.portcast.io/api/v2/eta
+  - Container Detail
   properties:
-  - url: https://www.portcast.io/ocean-vessel-tracking-api
-    type: Documentation
-  - url: openapi/portcast-openapi.yml
-    type: OpenAPI
-  description: Vessel schedule, voyage, and live AIS position data surfaced through
-    the tracking response - vessel name, IMO, MMSI, flag, inbound and outbound voyage
-    numbers, and scheduled arrival and departure times at each port on the route.
-- aid: portcast:webhooks-api
-  name: Portcast Webhooks (Push API)
+  - type: OpenAPI
+    url: openapi/portcast-container-detail-api-openapi.yml
+  - type: Documentation
+    url: https://portcast.stoplight.io/docs/portcast-api/5xrqljlsknrvm-input-data-guide
+  - type: APIReference
+    url: >-
+      https://portcast.stoplight.io/docs/portcast-api/e120e68fcdc40-upload-using-container-number
+  - type: Documentation
+    url: >-
+      https://portcast.stoplight.io/docs/portcast-api/7p466hav2ds7x-container-events-data-types
+  - type: Documentation
+    url: https://www.portcast.io/ocean-vessel-tracking-api
+  - type: Documentation
+    url: https://portcast.stoplight.io/docs/portcast-api/dxd93fedun52o-push-api
+- aid: portcast:portcast-reference-api
+  name: Portcast Reference API
+  description: Supported carrier SCAC reference data.
+  humanURL: https://portcast.stoplight.io/docs/portcast-api/
+  baseURL: https://api.portcast.io/api/v2/eta
   tags:
-  - Webhooks
-  - Push
-  - Callbacks
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://portcast.stoplight.io/docs/portcast-api/dxd93fedun52o-push-api
-  baseURL: https://api.portcast.io/api/v2/eta
+  - Reference
   properties:
-  - url: https://portcast.stoplight.io/docs/portcast-api/dxd93fedun52o-push-api
-    type: Documentation
-  - url: openapi/portcast-openapi.yml
-    type: OpenAPI
-  description: Register an HTTPS callback_url on a tracking upload and Portcast pushes
-    the full tracking JSON object to your endpoint whenever container milestones or
-    predictions are updated - eliminating polling.
+  - type: OpenAPI
+    url: openapi/portcast-reference-api-openapi.yml
+  - type: Documentation
+    url: https://portcast.stoplight.io/docs/portcast-api/5xrqljlsknrvm-input-data-guide
+  - type: APIReference
+    url: >-
+      https://portcast.stoplight.io/docs/portcast-api/e120e68fcdc40-upload-using-container-number
+  - type: Documentation
+    url: >-
+      https://portcast.stoplight.io/docs/portcast-api/7p466hav2ds7x-container-events-data-types
+  - type: Documentation
+    url: https://www.portcast.io/ocean-vessel-tracking-api
+  - type: Documentation
+    url: https://portcast.stoplight.io/docs/portcast-api/dxd93fedun52o-push-api
+- aid: portcast:portcast-tracking-data-api
+  name: Portcast Tracking Data API
+  description: Retrieve tracking results, predicted ETA/ETD, and milestones.
+  humanURL: https://portcast.stoplight.io/docs/portcast-api/
+  baseURL: https://api.portcast.io/api/v2/eta
+  tags:
+  - Tracking Data
+  properties:
+  - type: OpenAPI
+    url: openapi/portcast-tracking-data-api-openapi.yml
+  - type: Documentation
+    url: https://portcast.stoplight.io/docs/portcast-api/5xrqljlsknrvm-input-data-guide
+  - type: APIReference
+    url: >-
+      https://portcast.stoplight.io/docs/portcast-api/e120e68fcdc40-upload-using-container-number
+  - type: Documentation
+    url: >-
+      https://portcast.stoplight.io/docs/portcast-api/7p466hav2ds7x-container-events-data-types
+  - type: Documentation
+    url: https://www.portcast.io/ocean-vessel-tracking-api
+  - type: Documentation
+    url: https://portcast.stoplight.io/docs/portcast-api/dxd93fedun52o-push-api
+- aid: portcast:portcast-tracking-upload-api
+  name: Portcast Tracking Upload API
+  description: Start tracking an ocean shipment.
+  humanURL: https://portcast.stoplight.io/docs/portcast-api/
+  baseURL: https://api.portcast.io/api/v2/eta
+  tags:
+  - Tracking Upload
+  properties:
+  - type: OpenAPI
+    url: openapi/portcast-tracking-upload-api-openapi.yml
+  - type: Documentation
+    url: https://portcast.stoplight.io/docs/portcast-api/5xrqljlsknrvm-input-data-guide
+  - type: APIReference
+    url: >-
+      https://portcast.stoplight.io/docs/portcast-api/e120e68fcdc40-upload-using-container-number
+  - type: Documentation
+    url: >-
+      https://portcast.stoplight.io/docs/portcast-api/7p466hav2ds7x-container-events-data-types
+  - type: Documentation
+    url: https://www.portcast.io/ocean-vessel-tracking-api
+  - type: Documentation
+    url: https://portcast.stoplight.io/docs/portcast-api/dxd93fedun52o-push-api
 common:
 - type: AgenticAccess
   url: agentic-access/portcast-agentic-access.yml
