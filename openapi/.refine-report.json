@@ -1,0 +1,22 @@
+{
+  "provider": "portcast",
+  "sources": [
+    "portcast-augmentation-api-openapi.yml",
+    "portcast-container-detail-api-openapi.yml",
+    "portcast-reference-api-openapi.yml",
+    "portcast-tracking-data-api-openapi.yml",
+    "portcast-tracking-upload-api-openapi.yml"
+  ],
+  "outputs": [
+    "portcast-augmentation-api-openapi.yml",
+    "portcast-container-detail-api-openapi.yml",
+    "portcast-reference-api-openapi.yml",
+    "portcast-tracking-data-api-openapi.yml",
+    "portcast-tracking-upload-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
