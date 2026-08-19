@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Portcast Container Tracking Augmentation Tracking Upload API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tracking Upload",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload using Container Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.portcast.io/api/v2/eta/bill-of-lading-bookmarks",
+            "headers": [
+              {
+                "name": "x-customer",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start tracking an ocean container. Provide the container number, the carrier SCAC code (or AUTO), and optionally the master bill of lading / booking number and an HTTPS callback_url for Push updates. Returns the created bill-of-lading bookmark including the bookmark id used to fetch tracking data."
+        },
+        {
+          "info": {
+            "name": "Upload using Booking / Bill of Lading",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.portcast.io/api/v2/eta/booking",
+            "headers": [
+              {
+                "name": "x-customer",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start tracking using a booking or bill of lading number without a container number; Portcast discovers the containers on the document. Returns discovered containers, booking details, locations, vessels, and the resolved route."
+        },
+        {
+          "info": {
+            "name": "Archive Bookmark ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.portcast.io/api/v2/eta/bill-of-lading-bookmarks/:bookmark_id",
+            "headers": [
+              {
+                "name": "x-customer",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookmark_id",
+                "value": "",
+                "type": "path",
+                "description": "The bill-of-lading bookmark id returned by an upload call."
+              }
+            ]
+          },
+          "docs": "Archive a bookmark to stop tracking the shipment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

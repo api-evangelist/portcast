@@ -1,0 +1,134 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Portcast Container Tracking Augmentation API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Augmentation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch Container Augmentation Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/:bookmark_id/augmentations",
+            "headers": [
+              {
+                "name": "x-customer",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookmark_id",
+                "value": "",
+                "type": "path",
+                "description": "The bill-of-lading bookmark id returned by an upload call."
+              }
+            ]
+          },
+          "docs": "Fetch Container Augmentation Data"
+        },
+        {
+          "info": {
+            "name": "Upload new Container Augmentation Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/:bookmark_id/augmentations",
+            "headers": [
+              {
+                "name": "x-customer",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookmark_id",
+                "value": "",
+                "type": "path",
+                "description": "The bill-of-lading bookmark id returned by an upload call."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upload new Container Augmentation Data"
+        },
+        {
+          "info": {
+            "name": "Update existing Container Augmentation Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/:bookmark_id/augmentations",
+            "headers": [
+              {
+                "name": "x-customer",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookmark_id",
+                "value": "",
+                "type": "path",
+                "description": "The bill-of-lading bookmark id returned by an upload call."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update existing Container Augmentation Data"
+        },
+        {
+          "info": {
+            "name": "Delete Container Augmentation Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/:bookmark_id/augmentations",
+            "headers": [
+              {
+                "name": "x-customer",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookmark_id",
+                "value": "",
+                "type": "path",
+                "description": "The bill-of-lading bookmark id returned by an upload call."
+              }
+            ]
+          },
+          "docs": "Delete Container Augmentation Data"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

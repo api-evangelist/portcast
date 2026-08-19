@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Portcast Container Tracking Augmentation Container Detail API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Container Detail",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Container Route API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/:bookmark_id/container_route",
+            "headers": [
+              {
+                "name": "x-customer",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookmark_id",
+                "value": "",
+                "type": "path",
+                "description": "The bill-of-lading bookmark id returned by an upload call."
+              }
+            ]
+          },
+          "docs": "Return the actual and optimal ocean route for a bookmark, with origin and destination port coordinates, per-leg geometry, and the current vessel."
+        },
+        {
+          "info": {
+            "name": "Container Risks API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/:bookmark_id/risks",
+            "headers": [
+              {
+                "name": "x-customer",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookmark_id",
+                "value": "",
+                "type": "path",
+                "description": "The bill-of-lading bookmark id returned by an upload call."
+              }
+            ]
+          },
+          "docs": "Return identified risks for a tracked container."
+        },
+        {
+          "info": {
+            "name": "Container Terminal Data API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/:bookmark_id/import_export_plan",
+            "headers": [
+              {
+                "name": "x-customer",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookmark_id",
+                "value": "",
+                "type": "path",
+                "description": "The bill-of-lading bookmark id returned by an upload call."
+              }
+            ]
+          },
+          "docs": "Return the export plan (ERD, port cutoffs, gate-in) and import plan (discharge, last free day, gate-out, demurrage, pickup appointment) for a tracked container."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

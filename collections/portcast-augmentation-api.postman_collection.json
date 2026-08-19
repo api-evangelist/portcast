@@ -1,0 +1,771 @@
+{
+  "item": [
+    {
+      "id": "413af180-b91e-46c1-8841-d94b916e73c3",
+      "name": "Augmentation",
+      "description": {
+        "content": "Manage custom augmentation data on a bookmark.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0bcd64a3-c9e0-4ad5-8a63-1a518cff67aa",
+          "name": "Fetch Container Augmentation Data",
+          "request": {
+            "name": "Fetch Container Augmentation Data",
+            "description": {},
+            "url": {
+              "path": [
+                "tracking",
+                "bill-of-lading-bookmarks",
+                ":bookmark_id",
+                "augmentations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookmark_id",
+                  "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                "key": "x-customer",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8e40f5d7-143d-473b-bacd-bfc60293f0af",
+              "name": "Augmentation data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "bill-of-lading-bookmarks",
+                    ":bookmark_id",
+                    "augmentations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookmark_id",
+                      "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": \"string\",\n  \"key_1\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "40e81c38-ea10-489a-bf79-4c821e2ab866",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "bill-of-lading-bookmarks",
+                    ":bookmark_id",
+                    "augmentations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookmark_id",
+                      "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ff31dee6-0e87-43a7-be48-98d911433477",
+          "name": "Upload new Container Augmentation Data",
+          "request": {
+            "name": "Upload new Container Augmentation Data",
+            "description": {},
+            "url": {
+              "path": [
+                "tracking",
+                "bill-of-lading-bookmarks",
+                ":bookmark_id",
+                "augmentations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookmark_id",
+                  "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                "key": "x-customer",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key_0\": false,\n  \"key_1\": \"string\",\n  \"key_2\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bab0ad67-6649-4439-ad39-20520299217a",
+              "name": "Augmentation created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "bill-of-lading-bookmarks",
+                    ":bookmark_id",
+                    "augmentations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookmark_id",
+                      "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": \"string\",\n  \"key_1\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ace313d2-0e46-40a7-bfc6-9f7f769b4289",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "bill-of-lading-bookmarks",
+                    ":bookmark_id",
+                    "augmentations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookmark_id",
+                      "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": \"string\",\n  \"key_1\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "85d307e8-a7de-4a78-a9ba-8120e6afbe4e",
+          "name": "Update existing Container Augmentation Data",
+          "request": {
+            "name": "Update existing Container Augmentation Data",
+            "description": {},
+            "url": {
+              "path": [
+                "tracking",
+                "bill-of-lading-bookmarks",
+                ":bookmark_id",
+                "augmentations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookmark_id",
+                  "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                "key": "x-customer",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key_0\": false,\n  \"key_1\": \"string\",\n  \"key_2\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9d8217ae-f4f6-4efa-9d0c-30c6cc3d39eb",
+              "name": "Augmentation updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "bill-of-lading-bookmarks",
+                    ":bookmark_id",
+                    "augmentations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookmark_id",
+                      "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": \"string\",\n  \"key_1\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7e6e7f14-928f-4005-b3bc-4e2dd3c5671a",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "bill-of-lading-bookmarks",
+                    ":bookmark_id",
+                    "augmentations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookmark_id",
+                      "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": \"string\",\n  \"key_1\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "86a58ca7-009c-472c-84a5-7629a1c84bc2",
+          "name": "Delete Container Augmentation Data",
+          "request": {
+            "name": "Delete Container Augmentation Data",
+            "description": {},
+            "url": {
+              "path": [
+                "tracking",
+                "bill-of-lading-bookmarks",
+                ":bookmark_id",
+                "augmentations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookmark_id",
+                  "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                "key": "x-customer",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fcacebcb-6b4f-49f2-956e-d9ca71cc61fa",
+              "name": "Augmentation deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "bill-of-lading-bookmarks",
+                    ":bookmark_id",
+                    "augmentations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookmark_id",
+                      "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8a028ceb-78e2-4461-b100-a10bb2566ade",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "bill-of-lading-bookmarks",
+                    ":bookmark_id",
+                    "augmentations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookmark_id",
+                      "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.portcast.io/api/v2/eta",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "34290228-187c-4fe4-9b09-468d27e84458",
+    "name": "Portcast Container Tracking Augmentation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Portcast Container Tracking API returns the full journey of an ocean container - standardized milestone events, vessel schedules, port codes, transport plan, delays, terminal data, CO2 emissions, and machine-learning predicted ETAs and ETDs - in a single JSON response. Shipments are tracked by container number, by booking or bill of lading number, plus a carrier SCAC code (or AUTO for auto-detection). An optional callback_url registers a Push (webhook) endpoint that Portcast posts the tracking object to on every update.\n\nContact Support:\n Name: Portcast Support",
+      "type": "text/plain"
+    }
+  }
+}

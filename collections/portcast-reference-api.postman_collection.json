@@ -1,0 +1,170 @@
+{
+  "item": [
+    {
+      "id": "d69b7271-201b-4c9d-994a-ba507feef543",
+      "name": "Reference",
+      "description": {
+        "content": "Supported carrier SCAC reference data.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bf0d2534-347f-49a5-9234-4287d767d84d",
+          "name": "Supported Carrier SCAC List",
+          "request": {
+            "name": "Supported Carrier SCAC List",
+            "description": {
+              "content": "Return the list of supported carriers with SCAC codes, synonyms, bill of lading prefixes, and the upload types supported per carrier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scac"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6d28d3b2-37bb-4b54-9c61-981c819d975e",
+              "name": "Supported carrier SCAC list.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scac"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"scac\": \"string\",\n    \"name\": \"string\",\n    \"full_name\": \"string\",\n    \"scac_synonyms\": [\n      \"string\",\n      \"string\"\n    ],\n    \"bl_prefixes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"supported_status\": \"string\",\n    \"supported_types\": {\n      \"cntr\": false,\n      \"bl\": false,\n      \"bkg\": true,\n      \"bl_cntr\": true,\n      \"bk_cntr\": false\n    },\n    \"updated\": \"string\"\n  },\n  {\n    \"scac\": \"string\",\n    \"name\": \"string\",\n    \"full_name\": \"string\",\n    \"scac_synonyms\": [\n      \"string\",\n      \"string\"\n    ],\n    \"bl_prefixes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"supported_status\": \"string\",\n    \"supported_types\": {\n      \"cntr\": false,\n      \"bl\": false,\n      \"bkg\": false,\n      \"bl_cntr\": false,\n      \"bk_cntr\": true\n    },\n    \"updated\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "665c9fa4-3e0d-423d-8341-8e0e5c276697",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scac"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.portcast.io/api/v2/eta",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "09d5e280-d6b1-433e-b3e8-3619575c6eda",
+    "name": "Portcast Container Tracking Augmentation Reference API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Portcast Container Tracking API returns the full journey of an ocean container - standardized milestone events, vessel schedules, port codes, transport plan, delays, terminal data, CO2 emissions, and machine-learning predicted ETAs and ETDs - in a single JSON response. Shipments are tracked by container number, by booking or bill of lading number, plus a carrier SCAC code (or AUTO for auto-detection). An optional callback_url registers a Push (webhook) endpoint that Portcast posts the tracking object to on every update.\n\nContact Support:\n Name: Portcast Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Portcast Container Tracking Augmentation Reference API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reference",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Supported Carrier SCAC List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.portcast.io/api/v2/eta/scac"
+          },
+          "docs": "Return the list of supported carriers with SCAC codes, synonyms, bill of lading prefixes, and the upload types supported per carrier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

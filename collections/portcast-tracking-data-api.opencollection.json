@@ -1,0 +1,94 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Portcast Container Tracking Augmentation Tracking Data API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tracking Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Tracking data by Container, Bill of Lading or Carrier",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks",
+            "headers": [
+              {
+                "name": "x-customer",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "carrier_no",
+                "value": "",
+                "type": "query",
+                "description": "Carrier SCAC code or synonym."
+              },
+              {
+                "name": "bl_no",
+                "value": "",
+                "type": "query",
+                "description": "Master bill of lading or booking number."
+              },
+              {
+                "name": "cntr_no",
+                "value": "",
+                "type": "query",
+                "description": "Container number (ISO 6346)."
+              },
+              {
+                "name": "_start_after",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor returned by a previous page."
+              }
+            ]
+          },
+          "docs": "List tracking objects filtered by container number, bill of lading number, and/or carrier SCAC, with cursor pagination via _start_after."
+        },
+        {
+          "info": {
+            "name": "Fetch tracking data by Bookmark ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.portcast.io/api/v2/eta/tracking/bill-of-lading-bookmarks/:bookmark_id",
+            "headers": [
+              {
+                "name": "x-customer",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookmark_id",
+                "value": "",
+                "type": "path",
+                "description": "The bill-of-lading bookmark id returned by an upload call."
+              }
+            ]
+          },
+          "docs": "Fetch the full tracking object for a bookmark, including standardized container milestone events, per-leg sailing info with predicted and scheduled ETA/ETD, transport plan, delays, container metadata, and CO2 emissions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,547 @@
+{
+  "item": [
+    {
+      "id": "bc17ccef-1864-4754-92a3-60a234c72483",
+      "name": "Tracking Upload",
+      "description": {
+        "content": "Start tracking an ocean shipment.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "580e7156-c007-425f-865a-89a876cd8f5d",
+          "name": "Upload using Container Number",
+          "request": {
+            "name": "Upload using Container Number",
+            "description": {
+              "content": "Start tracking an ocean container. Provide the container number, the carrier SCAC code (or AUTO), and optionally the master bill of lading / booking number and an HTTPS callback_url for Push updates. Returns the created bill-of-lading bookmark including the bookmark id used to fetch tracking data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bill-of-lading-bookmarks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                "key": "x-customer",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cntr_no\": \"<string>\",\n  \"carrier_no\": \"<string>\",\n  \"bl_no\": \"<string>\",\n  \"callback_url\": \"<uri>\",\n  \"custom_fields\": {\n    \"key_0\": \"string\",\n    \"key_1\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2ec241bb-0453-458a-b39b-2cb4fc358918",
+              "name": "Bookmark created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill-of-lading-bookmarks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cntr_no\": \"<string>\",\n  \"carrier_no\": \"<string>\",\n  \"bl_no\": \"<string>\",\n  \"callback_url\": \"<uri>\",\n  \"custom_fields\": {\n    \"key_0\": 4834.756386525308,\n    \"key_1\": 6759,\n    \"key_2\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"obj\": {\n    \"id\": \"string\",\n    \"bl_no\": \"string\",\n    \"carrier_no\": \"string\",\n    \"cntr_no\": \"string\",\n    \"derived_carrier_no\": \"string\",\n    \"org_id\": \"string\",\n    \"created\": \"string\",\n    \"updated\": \"string\",\n    \"deleted\": false,\n    \"system_deleted\": false,\n    \"status_info\": {\n      \"code\": \"string\",\n      \"metadata\": {\n        \"key_0\": \"string\",\n        \"key_1\": true\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86f4ba9c-bc48-43b9-b32a-ba3018222835",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill-of-lading-bookmarks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cntr_no\": \"<string>\",\n  \"carrier_no\": \"<string>\",\n  \"bl_no\": \"<string>\",\n  \"callback_url\": \"<uri>\",\n  \"custom_fields\": {\n    \"key_0\": 4834.756386525308,\n    \"key_1\": 6759,\n    \"key_2\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "38343448-e5ba-4ae7-a5f3-c62660b11e00",
+          "name": "Upload using Booking / Bill of Lading",
+          "request": {
+            "name": "Upload using Booking / Bill of Lading",
+            "description": {
+              "content": "Start tracking using a booking or bill of lading number without a container number; Portcast discovers the containers on the document. Returns discovered containers, booking details, locations, vessels, and the resolved route.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "booking"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                "key": "x-customer",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"doc_no\": \"<string>\",\n  \"doc_type\": \"<string>\",\n  \"carrier_no\": \"<string>\",\n  \"callback_url\": \"<uri>\",\n  \"custom_fields\": {\n    \"key_0\": \"string\",\n    \"key_1\": 4828\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "99096044-3f2d-4db8-ace6-ca9396ec385f",
+              "name": "Booking accepted and containers discovered.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "booking"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"doc_no\": \"<string>\",\n  \"doc_type\": \"<string>\",\n  \"carrier_no\": \"<string>\",\n  \"callback_url\": \"<uri>\",\n  \"custom_fields\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"containers\": [\n    \"string\",\n    \"string\"\n  ],\n  \"booking_details\": {\n    \"doc_number\": \"string\",\n    \"doc_type\": \"string\",\n    \"carrier_no\": \"string\",\n    \"booking_container_qty\": [\n      {\n        \"key_0\": false,\n        \"key_1\": 2605\n      },\n      {\n        \"key_0\": false,\n        \"key_1\": \"string\"\n      }\n    ],\n    \"updated\": \"string\"\n  },\n  \"response\": [\n    {\n      \"id\": \"string\",\n      \"bl_no\": \"string\",\n      \"carrier_no\": \"string\",\n      \"cntr_no\": \"string\",\n      \"derived_carrier_no\": \"string\",\n      \"org_id\": \"string\",\n      \"created\": \"string\",\n      \"updated\": \"string\",\n      \"deleted\": true,\n      \"system_deleted\": false,\n      \"status_info\": {\n        \"code\": \"string\",\n        \"metadata\": {\n          \"key_0\": 5184.493427348059,\n          \"key_1\": \"string\",\n          \"key_2\": 1421.6589179315188,\n          \"key_3\": \"string\"\n        }\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"bl_no\": \"string\",\n      \"carrier_no\": \"string\",\n      \"cntr_no\": \"string\",\n      \"derived_carrier_no\": \"string\",\n      \"org_id\": \"string\",\n      \"created\": \"string\",\n      \"updated\": \"string\",\n      \"deleted\": true,\n      \"system_deleted\": false,\n      \"status_info\": {\n        \"code\": \"string\",\n        \"metadata\": {\n          \"key_0\": 9956.453087351043,\n          \"key_1\": 326,\n          \"key_2\": 2973\n        }\n      }\n    }\n  ],\n  \"locations\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"locode\": \"string\",\n      \"country\": \"string\",\n      \"country_code\": \"string\",\n      \"state\": \"string\",\n      \"lat\": 6365.703675813509,\n      \"lng\": 9922.580240948188\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"locode\": \"string\",\n      \"country\": \"string\",\n      \"country_code\": \"string\",\n      \"state\": \"string\",\n      \"lat\": 4379.670743436682,\n      \"lng\": 1577.683510639386\n    }\n  ],\n  \"vessels\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"imo\": \"string\",\n      \"mmsi\": \"string\",\n      \"call_sign\": \"string\",\n      \"flag\": \"string\",\n      \"voyage_no\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"imo\": \"string\",\n      \"mmsi\": \"string\",\n      \"call_sign\": \"string\",\n      \"flag\": \"string\",\n      \"voyage_no\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"route\": {\n    \"prepol\": {\n      \"location\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"locode\": \"string\",\n        \"country\": \"string\",\n        \"country_code\": \"string\",\n        \"state\": \"string\",\n        \"lat\": 9584.494221943542,\n        \"lng\": 9240.50273751887\n      },\n      \"date\": \"string\",\n      \"date_lt\": \"string\",\n      \"vessel\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"imo\": \"string\",\n        \"mmsi\": \"string\",\n        \"call_sign\": \"string\",\n        \"flag\": \"string\",\n        \"voyage_no\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"actual\": false\n    },\n    \"pol\": {\n      \"location\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"locode\": \"string\",\n        \"country\": \"string\",\n        \"country_code\": \"string\",\n        \"state\": \"string\",\n        \"lat\": 4543.355586241927,\n        \"lng\": 3154.687741492166\n      },\n      \"date\": \"string\",\n      \"date_lt\": \"string\",\n      \"vessel\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"imo\": \"string\",\n        \"mmsi\": \"string\",\n        \"call_sign\": \"string\",\n        \"flag\": \"string\",\n        \"voyage_no\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"actual\": true\n    },\n    \"pot\": {\n      \"location\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"locode\": \"string\",\n        \"country\": \"string\",\n        \"country_code\": \"string\",\n        \"state\": \"string\",\n        \"lat\": 994.2745617177218,\n        \"lng\": 1695.5113060599492\n      },\n      \"date\": \"string\",\n      \"date_lt\": \"string\",\n      \"vessel\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"imo\": \"string\",\n        \"mmsi\": \"string\",\n        \"call_sign\": \"string\",\n        \"flag\": \"string\",\n        \"voyage_no\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"actual\": false\n    },\n    \"pod\": {\n      \"location\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"locode\": \"string\",\n        \"country\": \"string\",\n        \"country_code\": \"string\",\n        \"state\": \"string\",\n        \"lat\": 4981.465563176237,\n        \"lng\": 9600.640400694108\n      },\n      \"date\": \"string\",\n      \"date_lt\": \"string\",\n      \"vessel\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"imo\": \"string\",\n        \"mmsi\": \"string\",\n        \"call_sign\": \"string\",\n        \"flag\": \"string\",\n        \"voyage_no\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"actual\": true\n    },\n    \"postpod\": {\n      \"location\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"locode\": \"string\",\n        \"country\": \"string\",\n        \"country_code\": \"string\",\n        \"state\": \"string\",\n        \"lat\": 1070.8907075536756,\n        \"lng\": 9432.529791342666\n      },\n      \"date\": \"string\",\n      \"date_lt\": \"string\",\n      \"vessel\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"imo\": \"string\",\n        \"mmsi\": \"string\",\n        \"call_sign\": \"string\",\n        \"flag\": \"string\",\n        \"voyage_no\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"actual\": true\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "586c2655-2613-43fc-9c6b-1b8180c9e690",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "booking"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"doc_no\": \"<string>\",\n  \"doc_type\": \"<string>\",\n  \"carrier_no\": \"<string>\",\n  \"callback_url\": \"<uri>\",\n  \"custom_fields\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fb29d818-987d-4757-95d6-b708913ade6f",
+          "name": "Archive Bookmark ID",
+          "request": {
+            "name": "Archive Bookmark ID",
+            "description": {
+              "content": "Archive a bookmark to stop tracking the shipment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bill-of-lading-bookmarks",
+                ":bookmark_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookmark_id",
+                  "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                "key": "x-customer",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "74a36a2a-0555-4f58-b6bf-7268e1a426a1",
+              "name": "Bookmark archived.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill-of-lading-bookmarks",
+                    ":bookmark_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookmark_id",
+                      "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b176bb8b-c28d-469f-ac59-702c26072dd3",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill-of-lading-bookmarks",
+                    ":bookmark_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookmark_id",
+                      "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.portcast.io/api/v2/eta",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c82db5d5-d246-4a60-9013-2ca3f779586f",
+    "name": "Portcast Container Tracking Augmentation Tracking Upload API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Portcast Container Tracking API returns the full journey of an ocean container - standardized milestone events, vessel schedules, port codes, transport plan, delays, terminal data, CO2 emissions, and machine-learning predicted ETAs and ETDs - in a single JSON response. Shipments are tracked by container number, by booking or bill of lading number, plus a carrier SCAC code (or AUTO for auto-detection). An optional callback_url registers a Push (webhook) endpoint that Portcast posts the tracking object to on every update.\n\nContact Support:\n Name: Portcast Support",
+      "type": "text/plain"
+    }
+  }
+}

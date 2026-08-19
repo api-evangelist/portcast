@@ -1,0 +1,565 @@
+{
+  "item": [
+    {
+      "id": "3a168112-fe44-464b-8e6f-1ff46178bc57",
+      "name": "Container Detail",
+      "description": {
+        "content": "Container route, risks, and terminal data sub-APIs.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e96be992-a5b9-4f61-b5a3-959efac139fa",
+          "name": "Container Route API",
+          "request": {
+            "name": "Container Route API",
+            "description": {
+              "content": "Return the actual and optimal ocean route for a bookmark, with origin and destination port coordinates, per-leg geometry, and the current vessel.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tracking",
+                "bill-of-lading-bookmarks",
+                ":bookmark_id",
+                "container_route"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookmark_id",
+                  "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                "key": "x-customer",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fdcd70d4-980c-4c44-8e91-6aea32b4af76",
+              "name": "Container route.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "bill-of-lading-bookmarks",
+                    ":bookmark_id",
+                    "container_route"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookmark_id",
+                      "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"actual_route\": {\n    \"POL\": {\n      \"name\": \"string\",\n      \"unlocode\": \"string\",\n      \"lat\": 7936.756845678959,\n      \"lon\": 4221.9091130588695\n    },\n    \"POD\": {\n      \"name\": \"string\",\n      \"unlocode\": \"string\",\n      \"lat\": 8357.411879601326,\n      \"lon\": 5416.097143843692\n    },\n    \"route_details\": [\n      {\n        \"key_0\": \"string\",\n        \"key_1\": true\n      },\n      {\n        \"key_0\": 8175,\n        \"key_1\": 1722\n      }\n    ]\n  },\n  \"optimal_route\": {\n    \"POL\": {\n      \"name\": \"string\",\n      \"unlocode\": \"string\",\n      \"lat\": 8247.488516128336,\n      \"lon\": 5628.71323642004\n    },\n    \"POD\": {\n      \"name\": \"string\",\n      \"unlocode\": \"string\",\n      \"lat\": 7327.691745260335,\n      \"lon\": 5538.139062310929\n    },\n    \"route_details\": [\n      {\n        \"key_0\": true,\n        \"key_1\": true\n      },\n      {\n        \"key_0\": 7501.721252987086,\n        \"key_1\": true,\n        \"key_2\": false\n      }\n    ]\n  },\n  \"current_vessel\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"imo\": \"string\",\n    \"mmsi\": \"string\",\n    \"call_sign\": \"string\",\n    \"flag\": \"string\",\n    \"voyage_no\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"bill_of_lading_bookmark\": {\n    \"id\": \"string\",\n    \"bl_no\": \"string\",\n    \"carrier_no\": \"string\",\n    \"cntr_no\": \"string\",\n    \"derived_carrier_no\": \"string\",\n    \"org_id\": \"string\",\n    \"created\": \"string\",\n    \"updated\": \"string\",\n    \"deleted\": false,\n    \"system_deleted\": false,\n    \"status_info\": {\n      \"code\": \"string\",\n      \"metadata\": {\n        \"key_0\": false,\n        \"key_1\": true,\n        \"key_2\": \"string\"\n      }\n    }\n  },\n  \"last_updated\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e648bbc8-2025-484b-a8e7-e165d0d3b0df",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "bill-of-lading-bookmarks",
+                    ":bookmark_id",
+                    "container_route"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookmark_id",
+                      "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9d780e67-2769-4db5-90bc-f4f0a352d1d5",
+          "name": "Container Risks API",
+          "request": {
+            "name": "Container Risks API",
+            "description": {
+              "content": "Return identified risks for a tracked container.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tracking",
+                "bill-of-lading-bookmarks",
+                ":bookmark_id",
+                "risks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookmark_id",
+                  "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                "key": "x-customer",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8840d705-e7f1-426c-9f0c-6100d635c000",
+              "name": "Container risks.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "bill-of-lading-bookmarks",
+                    ":bookmark_id",
+                    "risks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookmark_id",
+                      "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"risks\": [\n    {\n      \"risk_code\": \"string\",\n      \"description\": \"string\",\n      \"last_updated\": \"string\",\n      \"metadata\": {\n        \"key_0\": 7364.299068877603,\n        \"key_1\": 2549,\n        \"key_2\": \"string\"\n      }\n    },\n    {\n      \"risk_code\": \"string\",\n      \"description\": \"string\",\n      \"last_updated\": \"string\",\n      \"metadata\": {\n        \"key_0\": 6821\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2781baba-52b6-4776-b1a6-54477a797d29",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "bill-of-lading-bookmarks",
+                    ":bookmark_id",
+                    "risks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookmark_id",
+                      "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5ced05c0-220b-46f2-a8d0-bd67703c2300",
+          "name": "Container Terminal Data API",
+          "request": {
+            "name": "Container Terminal Data API",
+            "description": {
+              "content": "Return the export plan (ERD, port cutoffs, gate-in) and import plan (discharge, last free day, gate-out, demurrage, pickup appointment) for a tracked container.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tracking",
+                "bill-of-lading-bookmarks",
+                ":bookmark_id",
+                "import_export_plan"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookmark_id",
+                  "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                "key": "x-customer",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "42934846-ead4-46e3-b322-acd41997a2f2",
+              "name": "Terminal data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "bill-of-lading-bookmarks",
+                    ":bookmark_id",
+                    "import_export_plan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookmark_id",
+                      "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"export_plan\": {\n    \"facility_code\": \"string\",\n    \"facility_name\": \"string\",\n    \"port_code\": \"string\",\n    \"port_name\": \"string\",\n    \"erd_standard\": \"string\",\n    \"erd_reefer\": \"string\",\n    \"port_cutoff_standard\": \"string\",\n    \"port_cutoff_reefer\": \"string\",\n    \"gate_in_date\": \"string\",\n    \"latest_eta\": \"string\",\n    \"latest_etd\": \"string\",\n    \"actual_arrival\": \"string\",\n    \"actual_departure\": \"string\",\n    \"vessel_name\": \"string\",\n    \"voyage_no\": \"string\"\n  },\n  \"import_plan\": {\n    \"discharge_date\": \"string\",\n    \"last_free_day\": \"string\",\n    \"gate_out_date\": \"string\",\n    \"empty_return_date\": \"string\",\n    \"pickup_appointment_date\": \"string\",\n    \"appointment_set\": true,\n    \"ready_for_delivery\": false,\n    \"container_status\": \"string\",\n    \"container_holds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"demurrage_owed\": 3774.697436138582,\n    \"yard_location\": \"string\",\n    \"facility_code\": \"string\",\n    \"facility_name\": \"string\",\n    \"latest_eta\": \"string\",\n    \"vessel_name\": \"string\",\n    \"voyage_no\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b0a32c9-49cc-4f02-a914-3d75d1e4404d",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "bill-of-lading-bookmarks",
+                    ":bookmark_id",
+                    "import_export_plan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookmark_id",
+                      "description": "(Required) The bill-of-lading bookmark id returned by an upload call."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Enterprise-only header indicating which sub-account / flow the call applies to.",
+                    "key": "x-customer",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.portcast.io/api/v2/eta",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b64d01af-1ca2-4a1c-9207-d6261fb2b370",
+    "name": "Portcast Container Tracking Augmentation Container Detail API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Portcast Container Tracking API returns the full journey of an ocean container - standardized milestone events, vessel schedules, port codes, transport plan, delays, terminal data, CO2 emissions, and machine-learning predicted ETAs and ETDs - in a single JSON response. Shipments are tracked by container number, by booking or bill of lading number, plus a carrier SCAC code (or AUTO for auto-detection). An optional callback_url registers a Push (webhook) endpoint that Portcast posts the tracking object to on every update.\n\nContact Support:\n Name: Portcast Support",
+      "type": "text/plain"
+    }
+  }
+}
