@@ -7,6 +7,18 @@ description: Portcast is a predictive supply-chain visibility platform whose Con
   schedules, port codes, and machine-learning predicted ETAs and ETDs - in a single
   JSON response, tracked by container number, bill of lading, or booking number plus
   carrier SCAC, with push (webhook) callbacks on every update.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: self-serve
