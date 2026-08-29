@@ -1,0 +1,45 @@
+slug: portcast
+provider: Portcast
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Transportation & Logistics
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: Tracking Data
+  spec_file: portcast-tracking-data-api-openapi.yml
+  capability_id: BC-2510.20
+  capability_id_l1: BC-2510
+  capability_name: Shipment Tracking Management
+  confidence: 0.9
+  evidence: GET /tracking/bill-of-lading-bookmarks 'List Tracking data by Container, Bill of Lading or
+    Carrier'; schemas TrackingObject, ContainerEvent, Delay
+  reason: Retrieval of consolidated multi-leg container tracking objects including events and delays is
+    shipment tracking management.
+- tag: Container Detail
+  spec_file: portcast-container-detail-api-openapi.yml
+  capability_id: BC-2510
+  capability_id_l1: BC-2510
+  capability_name: Shipment Visibility & Tracking Management
+  confidence: 0.8
+  evidence: getContainerRoute 'Container Route API'; getContainerRisks 'Container Risks API'; getContainerTerminalData
+    'Container Terminal Data API'
+  reason: Route, risk and terminal detail for a tracked ocean container are shipment visibility services;
+    the mix of route, risk and terminal views spans several sub-capabilities so only the L1 is asserted.
+- tag: Tracking Upload
+  spec_file: portcast-tracking-upload-api-openapi.yml
+  capability_id: BC-2510.20
+  capability_id_l1: BC-2510
+  capability_name: Shipment Tracking Management
+  confidence: 0.75
+  evidence: POST /bill-of-lading-bookmarks uploadUsingContainerNumber 'Upload using Container Number';
+    DELETE ... archiveBookmark
+  reason: Registering containers/bookings for tracking and archiving them manages the tracked-shipment
+    population; could alternatively be classed as event capture, hence 0.75.

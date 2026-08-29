@@ -154,6 +154,9 @@ apis:
   - type: Documentation
     url: https://portcast.stoplight.io/docs/portcast-api/dxd93fedun52o-push-api
 common:
+- type: CapabilityMap
+  url: capabilities/portcast-capability-edges.yml
+  name: Portcast Business Capability Map
 - type: AgenticAccess
   url: agentic-access/portcast-agentic-access.yml
 - type: DomainSecurity
