@@ -1,11 +1,7 @@
 {
   "provider": "portcast",
   "sources": [
-    "portcast-augmentation-api-openapi.yml",
-    "portcast-container-detail-api-openapi.yml",
-    "portcast-reference-api-openapi.yml",
-    "portcast-tracking-data-api-openapi.yml",
-    "portcast-tracking-upload-api-openapi.yml"
+    "_original/portcast-openapi.yml"
   ],
   "outputs": [
     "portcast-augmentation-api-openapi.yml",
@@ -17,6 +13,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "portcast-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "portcast-augmentation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "portcast-container-detail-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "portcast-reference-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "portcast-tracking-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "portcast-tracking-upload-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

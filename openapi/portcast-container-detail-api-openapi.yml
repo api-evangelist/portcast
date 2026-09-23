@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Portcast Container Tracking Augmentation Container Detail API
-  description: Portcast Container Tracking API returns the full journey of an ocean container - standardized milestone events, vessel schedules, port codes, transport plan, delays, terminal data, CO2 emissions, and machine-learning predicted ETAs and ETDs - in a single JSON response. Shipments are tracked by container number, by booking or bill of lading number, plus a carrier SCAC code (or AUTO for auto-detection). An optional callback_url registers a Push (webhook) endpoint that Portcast posts the tracking object to on every update.
+  title: Portcast Container Tracking Container Detail API
+  description: Portcast Container Tracking API returns the full journey of an ocean container - standardized milestone events, vessel schedules, port codes, transport plan, delays, terminal data, CO2 emissions, and machine-learning predicted ETAs and ETDs - in a single JSON response.
   termsOfService: https://www.portcast.io/terms-of-use
   contact:
     name: Portcast Support
@@ -92,65 +92,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    PortPoint:
-      type: object
-      properties:
-        name:
-          type: string
-        unlocode:
-          type: string
-        lat:
-          type: number
-        lon:
-          type: number
-    Vessel:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        imo:
-          type: string
-        mmsi:
-          type: string
-        call_sign:
-          type: string
-        flag:
-          type: string
-        voyage_no:
-          type: array
-          items:
-            type: string
-    ContainerRouteResponse:
-      type: object
-      properties:
-        actual_route:
-          $ref: '#/components/schemas/RouteGeometry'
-        optimal_route:
-          $ref: '#/components/schemas/RouteGeometry'
-        current_vessel:
-          $ref: '#/components/schemas/Vessel'
-        bill_of_lading_bookmark:
-          $ref: '#/components/schemas/BillOfLadingBookmark'
-        last_updated:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-    RouteGeometry:
-      type: object
-      properties:
-        POL:
-          $ref: '#/components/schemas/PortPoint'
-        POD:
-          $ref: '#/components/schemas/PortPoint'
-        route_details:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
     ImportExportPlanResponse:
       type: object
       properties:
@@ -255,6 +196,65 @@ components:
             metadata:
               type: object
               additionalProperties: true
+    ContainerRouteResponse:
+      type: object
+      properties:
+        actual_route:
+          $ref: '#/components/schemas/RouteGeometry'
+        optimal_route:
+          $ref: '#/components/schemas/RouteGeometry'
+        current_vessel:
+          $ref: '#/components/schemas/Vessel'
+        bill_of_lading_bookmark:
+          $ref: '#/components/schemas/BillOfLadingBookmark'
+        last_updated:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    PortPoint:
+      type: object
+      properties:
+        name:
+          type: string
+        unlocode:
+          type: string
+        lat:
+          type: number
+        lon:
+          type: number
+    Vessel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        imo:
+          type: string
+        mmsi:
+          type: string
+        call_sign:
+          type: string
+        flag:
+          type: string
+        voyage_no:
+          type: array
+          items:
+            type: string
+    RouteGeometry:
+      type: object
+      properties:
+        POL:
+          $ref: '#/components/schemas/PortPoint'
+        POD:
+          $ref: '#/components/schemas/PortPoint'
+        route_details:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
   parameters:
     XCustomer:
       name: x-customer

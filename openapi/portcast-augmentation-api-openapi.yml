@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Portcast Container Tracking Augmentation API
-  description: Portcast Container Tracking API returns the full journey of an ocean container - standardized milestone events, vessel schedules, port codes, transport plan, delays, terminal data, CO2 emissions, and machine-learning predicted ETAs and ETDs - in a single JSON response. Shipments are tracked by container number, by booking or bill of lading number, plus a carrier SCAC code (or AUTO for auto-detection). An optional callback_url registers a Push (webhook) endpoint that Portcast posts the tracking object to on every update.
+  description: Portcast Container Tracking API returns the full journey of an ocean container - standardized milestone events, vessel schedules, port codes, transport plan, delays, terminal data, CO2 emissions, and machine-learning predicted ETAs and ETDs - in a single JSON response.
   termsOfService: https://www.portcast.io/terms-of-use
   contact:
     name: Portcast Support
@@ -87,13 +87,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   parameters:
-    XCustomer:
-      name: x-customer
-      in: header
-      required: false
-      schema:
-        type: string
-      description: Enterprise-only header indicating which sub-account / flow the call applies to.
     BookmarkId:
       name: bookmark_id
       in: path
@@ -101,6 +94,18 @@ components:
       schema:
         type: string
       description: The bill-of-lading bookmark id returned by an upload call.
+    XCustomer:
+      name: x-customer
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Enterprise-only header indicating which sub-account / flow the call applies to.
+  schemas:
+    Augmentation:
+      type: object
+      description: Custom augmentation data attached to a bookmark.
+      additionalProperties: true
   responses:
     Unauthorized:
       description: Missing or invalid API key.
@@ -111,11 +116,6 @@ components:
             properties:
               message:
                 type: string
-  schemas:
-    Augmentation:
-      type: object
-      description: Custom augmentation data attached to a bookmark.
-      additionalProperties: true
   securitySchemes:
     x-api-key:
       type: apiKey

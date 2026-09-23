@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Portcast Container Tracking Augmentation Tracking Upload API
-  description: Portcast Container Tracking API returns the full journey of an ocean container - standardized milestone events, vessel schedules, port codes, transport plan, delays, terminal data, CO2 emissions, and machine-learning predicted ETAs and ETDs - in a single JSON response. Shipments are tracked by container number, by booking or bill of lading number, plus a carrier SCAC code (or AUTO for auto-detection). An optional callback_url registers a Push (webhook) endpoint that Portcast posts the tracking object to on every update.
+  title: Portcast Container Tracking Tracking Upload API
+  description: Portcast Container Tracking API returns the full journey of an ocean container - standardized milestone events, vessel schedules, port codes, transport plan, delays, terminal data, CO2 emissions, and machine-learning predicted ETAs and ETDs - in a single JSON response.
   termsOfService: https://www.portcast.io/terms-of-use
   contact:
     name: Portcast Support
@@ -123,25 +123,6 @@ components:
             $ref: '#/components/schemas/Vessel'
         route:
           $ref: '#/components/schemas/Route'
-    Vessel:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        imo:
-          type: string
-        mmsi:
-          type: string
-        call_sign:
-          type: string
-        flag:
-          type: string
-        voyage_no:
-          type: array
-          items:
-            type: string
     RoutePoint:
       type: object
       properties:
@@ -155,43 +136,6 @@ components:
           $ref: '#/components/schemas/Vessel'
         actual:
           type: boolean
-    Route:
-      type: object
-      properties:
-        prepol:
-          $ref: '#/components/schemas/RoutePoint'
-        pol:
-          $ref: '#/components/schemas/RoutePoint'
-        pot:
-          $ref: '#/components/schemas/RoutePoint'
-        pod:
-          $ref: '#/components/schemas/RoutePoint'
-        postpod:
-          $ref: '#/components/schemas/RoutePoint'
-    BillOfLadingBookmarkResponse:
-      type: object
-      properties:
-        obj:
-          $ref: '#/components/schemas/BillOfLadingBookmark'
-    Location:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        locode:
-          type: string
-        country:
-          type: string
-        country_code:
-          type: string
-        state:
-          type: string
-        lat:
-          type: number
-        lng:
-          type: number
     BillOfLadingBookmark:
       type: object
       properties:
@@ -223,6 +167,38 @@ components:
             metadata:
               type: object
               additionalProperties: true
+    Location:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        locode:
+          type: string
+        country:
+          type: string
+        country_code:
+          type: string
+        state:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+    Route:
+      type: object
+      properties:
+        prepol:
+          $ref: '#/components/schemas/RoutePoint'
+        pol:
+          $ref: '#/components/schemas/RoutePoint'
+        pot:
+          $ref: '#/components/schemas/RoutePoint'
+        pod:
+          $ref: '#/components/schemas/RoutePoint'
+        postpod:
+          $ref: '#/components/schemas/RoutePoint'
     BookingUploadRequest:
       type: object
       required:
@@ -249,6 +225,30 @@ components:
         custom_fields:
           type: object
           additionalProperties: true
+    Vessel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        imo:
+          type: string
+        mmsi:
+          type: string
+        call_sign:
+          type: string
+        flag:
+          type: string
+        voyage_no:
+          type: array
+          items:
+            type: string
+    BillOfLadingBookmarkResponse:
+      type: object
+      properties:
+        obj:
+          $ref: '#/components/schemas/BillOfLadingBookmark'
     ContainerUploadRequest:
       type: object
       required:
