@@ -165,6 +165,54 @@ components:
               type: string
             voyage_no:
               type: string
+    ContainerRouteResponse:
+      type: object
+      properties:
+        actual_route:
+          $ref: '#/components/schemas/RouteGeometry'
+        optimal_route:
+          $ref: '#/components/schemas/RouteGeometry'
+        current_vessel:
+          $ref: '#/components/schemas/Vessel'
+        bill_of_lading_bookmark:
+          $ref: '#/components/schemas/BillOfLadingBookmark'
+        last_updated:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    RouteGeometry:
+      type: object
+      properties:
+        POL:
+          $ref: '#/components/schemas/PortPoint'
+        POD:
+          $ref: '#/components/schemas/PortPoint'
+        route_details:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    Vessel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        imo:
+          type: string
+        mmsi:
+          type: string
+        call_sign:
+          type: string
+        flag:
+          type: string
+        voyage_no:
+          type: array
+          items:
+            type: string
     BillOfLadingBookmark:
       type: object
       properties:
@@ -196,23 +244,6 @@ components:
             metadata:
               type: object
               additionalProperties: true
-    ContainerRouteResponse:
-      type: object
-      properties:
-        actual_route:
-          $ref: '#/components/schemas/RouteGeometry'
-        optimal_route:
-          $ref: '#/components/schemas/RouteGeometry'
-        current_vessel:
-          $ref: '#/components/schemas/Vessel'
-        bill_of_lading_bookmark:
-          $ref: '#/components/schemas/BillOfLadingBookmark'
-        last_updated:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
     PortPoint:
       type: object
       properties:
@@ -224,45 +255,7 @@ components:
           type: number
         lon:
           type: number
-    Vessel:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        imo:
-          type: string
-        mmsi:
-          type: string
-        call_sign:
-          type: string
-        flag:
-          type: string
-        voyage_no:
-          type: array
-          items:
-            type: string
-    RouteGeometry:
-      type: object
-      properties:
-        POL:
-          $ref: '#/components/schemas/PortPoint'
-        POD:
-          $ref: '#/components/schemas/PortPoint'
-        route_details:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
   parameters:
-    XCustomer:
-      name: x-customer
-      in: header
-      required: false
-      schema:
-        type: string
-      description: Enterprise-only header indicating which sub-account / flow the call applies to.
     BookmarkId:
       name: bookmark_id
       in: path
@@ -270,6 +263,13 @@ components:
       schema:
         type: string
       description: The bill-of-lading bookmark id returned by an upload call.
+    XCustomer:
+      name: x-customer
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Enterprise-only header indicating which sub-account / flow the call applies to.
   responses:
     Unauthorized:
       description: Missing or invalid API key.

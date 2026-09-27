@@ -86,70 +86,63 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    TransportPlanLeg:
+    TrackingObject:
       type: object
+      description: Full tracking result for a bookmark.
       properties:
-        leg:
-          type: integer
-        mode_of_transport:
+        bill_of_lading_bookmark:
+          $ref: '#/components/schemas/BillOfLadingBookmark'
+        success:
+          type: boolean
+        msg:
           type: string
-        source_location_code:
-          type: string
-        source_location_name:
-          type: string
-        destination_location_code:
-          type: string
-        destination_location_name:
-          type: string
-    BillOfLadingBookmark:
-      type: object
-      properties:
-        id:
-          type: string
-        bl_no:
-          type: string
-        carrier_no:
-          type: string
-        cntr_no:
-          type: string
-        derived_carrier_no:
+        response_id:
           type: string
         org_id:
           type: string
-        created:
-          type: string
-        updated:
-          type: string
-        deleted:
-          type: boolean
-        system_deleted:
-          type: boolean
         status_info:
           type: object
+          additionalProperties: true
+        container_event_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerEvent'
+        sailing_info_tracking:
+          type: array
+          items:
+            $ref: '#/components/schemas/SailingInfoLeg'
+        transport_plan:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransportPlanLeg'
+        delay_lists:
+          type: array
+          items:
+            $ref: '#/components/schemas/Delay'
+        container_metadata:
+          type: object
           properties:
-            code:
+            cntr_no:
               type: string
-            metadata:
-              type: object
-              additionalProperties: true
-    Delay:
-      type: object
-      properties:
-        reason_code:
-          type: string
-          description: e.g. RLV for vessel rollover.
-        delay_description:
-          type: string
-        port_code:
-          type: string
-        port_name:
-          type: string
-        vessel_change:
-          type: boolean
-        rotation_change:
-          type: boolean
-        schedule_change:
-          type: boolean
+            detail_st:
+              type: string
+              description: ISO size/type code.
+        co2_emissions:
+          type: object
+          properties:
+            total:
+              type: number
+            intensity:
+              type: number
+            ttw:
+              type: number
+            wtt:
+              type: number
+            distance:
+              type: number
+        custom_fields:
+          type: object
+          additionalProperties: true
     SailingInfoLeg:
       type: object
       description: Per-leg sailing schedule with predicted, scheduled, and actual times.
@@ -222,63 +215,39 @@ components:
         status_info:
           type: object
           additionalProperties: true
-    TrackingObject:
+    Delay:
       type: object
-      description: Full tracking result for a bookmark.
       properties:
-        bill_of_lading_bookmark:
-          $ref: '#/components/schemas/BillOfLadingBookmark'
-        success:
+        reason_code:
+          type: string
+          description: e.g. RLV for vessel rollover.
+        delay_description:
+          type: string
+        port_code:
+          type: string
+        port_name:
+          type: string
+        vessel_change:
           type: boolean
-        msg:
+        rotation_change:
+          type: boolean
+        schedule_change:
+          type: boolean
+    TransportPlanLeg:
+      type: object
+      properties:
+        leg:
+          type: integer
+        mode_of_transport:
           type: string
-        response_id:
+        source_location_code:
           type: string
-        org_id:
+        source_location_name:
           type: string
-        status_info:
-          type: object
-          additionalProperties: true
-        container_event_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContainerEvent'
-        sailing_info_tracking:
-          type: array
-          items:
-            $ref: '#/components/schemas/SailingInfoLeg'
-        transport_plan:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransportPlanLeg'
-        delay_lists:
-          type: array
-          items:
-            $ref: '#/components/schemas/Delay'
-        container_metadata:
-          type: object
-          properties:
-            cntr_no:
-              type: string
-            detail_st:
-              type: string
-              description: ISO size/type code.
-        co2_emissions:
-          type: object
-          properties:
-            total:
-              type: number
-            intensity:
-              type: number
-            ttw:
-              type: number
-            wtt:
-              type: number
-            distance:
-              type: number
-        custom_fields:
-          type: object
-          additionalProperties: true
+        destination_location_code:
+          type: string
+        destination_location_name:
+          type: string
     ContainerEvent:
       type: object
       description: A standardized container milestone event.
@@ -334,14 +303,38 @@ components:
           type: string
         updated:
           type: string
+    BillOfLadingBookmark:
+      type: object
+      properties:
+        id:
+          type: string
+        bl_no:
+          type: string
+        carrier_no:
+          type: string
+        cntr_no:
+          type: string
+        derived_carrier_no:
+          type: string
+        org_id:
+          type: string
+        created:
+          type: string
+        updated:
+          type: string
+        deleted:
+          type: boolean
+        system_deleted:
+          type: boolean
+        status_info:
+          type: object
+          properties:
+            code:
+              type: string
+            metadata:
+              type: object
+              additionalProperties: true
   parameters:
-    XCustomer:
-      name: x-customer
-      in: header
-      required: false
-      schema:
-        type: string
-      description: Enterprise-only header indicating which sub-account / flow the call applies to.
     BookmarkId:
       name: bookmark_id
       in: path
@@ -349,6 +342,13 @@ components:
       schema:
         type: string
       description: The bill-of-lading bookmark id returned by an upload call.
+    XCustomer:
+      name: x-customer
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Enterprise-only header indicating which sub-account / flow the call applies to.
   responses:
     Unauthorized:
       description: Missing or invalid API key.
