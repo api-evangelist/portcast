@@ -85,16 +85,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
   schemas:
     Delay:
       type: object
@@ -114,6 +104,107 @@ components:
           type: boolean
         schedule_change:
           type: boolean
+    TransportPlanLeg:
+      type: object
+      properties:
+        leg:
+          type: integer
+        mode_of_transport:
+          type: string
+        source_location_code:
+          type: string
+        source_location_name:
+          type: string
+        destination_location_code:
+          type: string
+        destination_location_name:
+          type: string
+    BillOfLadingBookmark:
+      type: object
+      properties:
+        id:
+          type: string
+        bl_no:
+          type: string
+        carrier_no:
+          type: string
+        cntr_no:
+          type: string
+        derived_carrier_no:
+          type: string
+        org_id:
+          type: string
+        created:
+          type: string
+        updated:
+          type: string
+        deleted:
+          type: boolean
+        system_deleted:
+          type: boolean
+        status_info:
+          type: object
+          properties:
+            code:
+              type: string
+            metadata:
+              type: object
+              additionalProperties: true
+    ContainerEvent:
+      type: object
+      description: A standardized container milestone event.
+      properties:
+        id:
+          type: string
+        event_type_code:
+          type: string
+        event_type_name:
+          type: string
+          description: Portcast standardized event name.
+        event_raw:
+          type: string
+          description: Raw event text from the carrier.
+        event_time:
+          type: string
+          description: Actual event time.
+        event_time_estimated:
+          type: string
+          description: Estimated event time.
+        location_raw:
+          type: string
+        location_type_code:
+          type: string
+        location_type_name:
+          type: string
+        port_code:
+          type: string
+          description: UN/LOCODE.
+        port_name:
+          type: string
+        terminal_details:
+          type: object
+          properties:
+            terminal_code:
+              type: string
+            terminal_code_source:
+              type: string
+              description: BIC or SMDG.
+            terminal_name:
+              type: string
+        mode_of_transport:
+          type: string
+        vessel_name:
+          type: string
+        vessel_imo:
+          type: string
+        voyage_no:
+          type: string
+        is_custom_event:
+          type: boolean
+        created:
+          type: string
+        updated:
+          type: string
     SailingInfoLeg:
       type: object
       description: Per-leg sailing schedule with predicted, scheduled, and actual times.
@@ -186,107 +277,6 @@ components:
         status_info:
           type: object
           additionalProperties: true
-    ContainerEvent:
-      type: object
-      description: A standardized container milestone event.
-      properties:
-        id:
-          type: string
-        event_type_code:
-          type: string
-        event_type_name:
-          type: string
-          description: Portcast standardized event name.
-        event_raw:
-          type: string
-          description: Raw event text from the carrier.
-        event_time:
-          type: string
-          description: Actual event time.
-        event_time_estimated:
-          type: string
-          description: Estimated event time.
-        location_raw:
-          type: string
-        location_type_code:
-          type: string
-        location_type_name:
-          type: string
-        port_code:
-          type: string
-          description: UN/LOCODE.
-        port_name:
-          type: string
-        terminal_details:
-          type: object
-          properties:
-            terminal_code:
-              type: string
-            terminal_code_source:
-              type: string
-              description: BIC or SMDG.
-            terminal_name:
-              type: string
-        mode_of_transport:
-          type: string
-        vessel_name:
-          type: string
-        vessel_imo:
-          type: string
-        voyage_no:
-          type: string
-        is_custom_event:
-          type: boolean
-        created:
-          type: string
-        updated:
-          type: string
-    BillOfLadingBookmark:
-      type: object
-      properties:
-        id:
-          type: string
-        bl_no:
-          type: string
-        carrier_no:
-          type: string
-        cntr_no:
-          type: string
-        derived_carrier_no:
-          type: string
-        org_id:
-          type: string
-        created:
-          type: string
-        updated:
-          type: string
-        deleted:
-          type: boolean
-        system_deleted:
-          type: boolean
-        status_info:
-          type: object
-          properties:
-            code:
-              type: string
-            metadata:
-              type: object
-              additionalProperties: true
-    TransportPlanLeg:
-      type: object
-      properties:
-        leg:
-          type: integer
-        mode_of_transport:
-          type: string
-        source_location_code:
-          type: string
-        source_location_name:
-          type: string
-        destination_location_code:
-          type: string
-        destination_location_name:
-          type: string
     TrackingObject:
       type: object
       description: Full tracking result for a bookmark.
@@ -345,13 +335,6 @@ components:
           type: object
           additionalProperties: true
   parameters:
-    XCustomer:
-      name: x-customer
-      in: header
-      required: false
-      schema:
-        type: string
-      description: Enterprise-only header indicating which sub-account / flow the call applies to.
     BookmarkId:
       name: bookmark_id
       in: path
@@ -359,6 +342,23 @@ components:
       schema:
         type: string
       description: The bill-of-lading bookmark id returned by an upload call.
+    XCustomer:
+      name: x-customer
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Enterprise-only header indicating which sub-account / flow the call applies to.
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
   securitySchemes:
     x-api-key:
       type: apiKey

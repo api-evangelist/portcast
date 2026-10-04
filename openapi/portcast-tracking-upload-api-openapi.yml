@@ -81,25 +81,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Vessel:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        imo:
-          type: string
-        mmsi:
-          type: string
-        call_sign:
-          type: string
-        flag:
-          type: string
-        voyage_no:
-          type: array
-          items:
-            type: string
     RoutePoint:
       type: object
       properties:
@@ -113,42 +94,6 @@ components:
           $ref: '#/components/schemas/Vessel'
         actual:
           type: boolean
-    Route:
-      type: object
-      properties:
-        prepol:
-          $ref: '#/components/schemas/RoutePoint'
-        pol:
-          $ref: '#/components/schemas/RoutePoint'
-        pot:
-          $ref: '#/components/schemas/RoutePoint'
-        pod:
-          $ref: '#/components/schemas/RoutePoint'
-        postpod:
-          $ref: '#/components/schemas/RoutePoint'
-    ContainerUploadRequest:
-      type: object
-      required:
-      - cntr_no
-      - carrier_no
-      properties:
-        cntr_no:
-          type: string
-          description: Container number (ISO 6346).
-        carrier_no:
-          type: string
-          description: Carrier SCAC code or synonym; use AUTO to auto-detect.
-        bl_no:
-          type: string
-          description: Master bill of lading or booking number.
-        callback_url:
-          type: string
-          format: uri
-          description: HTTPS endpoint Portcast posts the tracking JSON object to whenever there are updates (Push API).
-        custom_fields:
-          type: object
-          additionalProperties: true
-          description: Optional augmentation data attached to the bookmark.
     BookingUploadResponse:
       type: object
       properties:
@@ -191,25 +136,19 @@ components:
             $ref: '#/components/schemas/Vessel'
         route:
           $ref: '#/components/schemas/Route'
-    Location:
+    Route:
       type: object
       properties:
-        id:
-          type: string
-        name:
-          type: string
-        locode:
-          type: string
-        country:
-          type: string
-        country_code:
-          type: string
-        state:
-          type: string
-        lat:
-          type: number
-        lng:
-          type: number
+        prepol:
+          $ref: '#/components/schemas/RoutePoint'
+        pol:
+          $ref: '#/components/schemas/RoutePoint'
+        pot:
+          $ref: '#/components/schemas/RoutePoint'
+        pod:
+          $ref: '#/components/schemas/RoutePoint'
+        postpod:
+          $ref: '#/components/schemas/RoutePoint'
     BillOfLadingBookmark:
       type: object
       properties:
@@ -241,11 +180,6 @@ components:
             metadata:
               type: object
               additionalProperties: true
-    BillOfLadingBookmarkResponse:
-      type: object
-      properties:
-        obj:
-          $ref: '#/components/schemas/BillOfLadingBookmark'
     BookingUploadRequest:
       type: object
       required:
@@ -272,6 +206,87 @@ components:
         custom_fields:
           type: object
           additionalProperties: true
+    BillOfLadingBookmarkResponse:
+      type: object
+      properties:
+        obj:
+          $ref: '#/components/schemas/BillOfLadingBookmark'
+    Location:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        locode:
+          type: string
+        country:
+          type: string
+        country_code:
+          type: string
+        state:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+    ContainerUploadRequest:
+      type: object
+      required:
+      - cntr_no
+      - carrier_no
+      properties:
+        cntr_no:
+          type: string
+          description: Container number (ISO 6346).
+        carrier_no:
+          type: string
+          description: Carrier SCAC code or synonym; use AUTO to auto-detect.
+        bl_no:
+          type: string
+          description: Master bill of lading or booking number.
+        callback_url:
+          type: string
+          format: uri
+          description: HTTPS endpoint Portcast posts the tracking JSON object to whenever there are updates (Push API).
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Optional augmentation data attached to the bookmark.
+    Vessel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        imo:
+          type: string
+        mmsi:
+          type: string
+        call_sign:
+          type: string
+        flag:
+          type: string
+        voyage_no:
+          type: array
+          items:
+            type: string
+  parameters:
+    BookmarkId:
+      name: bookmark_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The bill-of-lading bookmark id returned by an upload call.
+    XCustomer:
+      name: x-customer
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Enterprise-only header indicating which sub-account / flow the call applies to.
   responses:
     Unauthorized:
       description: Missing or invalid API key.
@@ -282,21 +297,6 @@ components:
             properties:
               message:
                 type: string
-  parameters:
-    XCustomer:
-      name: x-customer
-      in: header
-      required: false
-      schema:
-        type: string
-      description: Enterprise-only header indicating which sub-account / flow the call applies to.
-    BookmarkId:
-      name: bookmark_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The bill-of-lading bookmark id returned by an upload call.
   securitySchemes:
     x-api-key:
       type: apiKey

@@ -86,26 +86,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  schemas:
-    Augmentation:
-      type: object
-      description: Custom augmentation data attached to a bookmark.
-      additionalProperties: true
-  parameters:
-    XCustomer:
-      name: x-customer
-      in: header
-      required: false
-      schema:
-        type: string
-      description: Enterprise-only header indicating which sub-account / flow the call applies to.
-    BookmarkId:
-      name: bookmark_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The bill-of-lading bookmark id returned by an upload call.
   responses:
     Unauthorized:
       description: Missing or invalid API key.
@@ -116,6 +96,26 @@ components:
             properties:
               message:
                 type: string
+  parameters:
+    BookmarkId:
+      name: bookmark_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The bill-of-lading bookmark id returned by an upload call.
+    XCustomer:
+      name: x-customer
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Enterprise-only header indicating which sub-account / flow the call applies to.
+  schemas:
+    Augmentation:
+      type: object
+      description: Custom augmentation data attached to a bookmark.
+      additionalProperties: true
   securitySchemes:
     x-api-key:
       type: apiKey
