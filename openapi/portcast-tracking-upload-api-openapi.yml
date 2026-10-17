@@ -81,6 +81,32 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    BookingUploadRequest:
+      type: object
+      required:
+      - doc_no
+      - doc_type
+      - carrier_no
+      properties:
+        doc_no:
+          type: string
+          description: Booking or bill of lading number.
+        doc_type:
+          type: string
+          enum:
+          - BK
+          - BL
+          description: BK for booking, BL for bill of lading.
+        carrier_no:
+          type: string
+          description: Carrier SCAC code or synonym; use AUTO to auto-detect.
+        callback_url:
+          type: string
+          format: uri
+          description: HTTPS endpoint for Push updates.
+        custom_fields:
+          type: object
+          additionalProperties: true
     RoutePoint:
       type: object
       properties:
@@ -94,6 +120,93 @@ components:
           $ref: '#/components/schemas/Vessel'
         actual:
           type: boolean
+    Location:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        locode:
+          type: string
+        country:
+          type: string
+        country_code:
+          type: string
+        state:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+    Route:
+      type: object
+      properties:
+        prepol:
+          $ref: '#/components/schemas/RoutePoint'
+        pol:
+          $ref: '#/components/schemas/RoutePoint'
+        pot:
+          $ref: '#/components/schemas/RoutePoint'
+        pod:
+          $ref: '#/components/schemas/RoutePoint'
+        postpod:
+          $ref: '#/components/schemas/RoutePoint'
+    BillOfLadingBookmarkResponse:
+      type: object
+      properties:
+        obj:
+          $ref: '#/components/schemas/BillOfLadingBookmark'
+    Vessel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        imo:
+          type: string
+        mmsi:
+          type: string
+        call_sign:
+          type: string
+        flag:
+          type: string
+        voyage_no:
+          type: array
+          items:
+            type: string
+    BillOfLadingBookmark:
+      type: object
+      properties:
+        id:
+          type: string
+        bl_no:
+          type: string
+        carrier_no:
+          type: string
+        cntr_no:
+          type: string
+        derived_carrier_no:
+          type: string
+        org_id:
+          type: string
+        created:
+          type: string
+        updated:
+          type: string
+        deleted:
+          type: boolean
+        system_deleted:
+          type: boolean
+        status_info:
+          type: object
+          properties:
+            code:
+              type: string
+            metadata:
+              type: object
+              additionalProperties: true
     BookingUploadResponse:
       type: object
       properties:
@@ -136,100 +249,6 @@ components:
             $ref: '#/components/schemas/Vessel'
         route:
           $ref: '#/components/schemas/Route'
-    Route:
-      type: object
-      properties:
-        prepol:
-          $ref: '#/components/schemas/RoutePoint'
-        pol:
-          $ref: '#/components/schemas/RoutePoint'
-        pot:
-          $ref: '#/components/schemas/RoutePoint'
-        pod:
-          $ref: '#/components/schemas/RoutePoint'
-        postpod:
-          $ref: '#/components/schemas/RoutePoint'
-    BillOfLadingBookmark:
-      type: object
-      properties:
-        id:
-          type: string
-        bl_no:
-          type: string
-        carrier_no:
-          type: string
-        cntr_no:
-          type: string
-        derived_carrier_no:
-          type: string
-        org_id:
-          type: string
-        created:
-          type: string
-        updated:
-          type: string
-        deleted:
-          type: boolean
-        system_deleted:
-          type: boolean
-        status_info:
-          type: object
-          properties:
-            code:
-              type: string
-            metadata:
-              type: object
-              additionalProperties: true
-    BookingUploadRequest:
-      type: object
-      required:
-      - doc_no
-      - doc_type
-      - carrier_no
-      properties:
-        doc_no:
-          type: string
-          description: Booking or bill of lading number.
-        doc_type:
-          type: string
-          enum:
-          - BK
-          - BL
-          description: BK for booking, BL for bill of lading.
-        carrier_no:
-          type: string
-          description: Carrier SCAC code or synonym; use AUTO to auto-detect.
-        callback_url:
-          type: string
-          format: uri
-          description: HTTPS endpoint for Push updates.
-        custom_fields:
-          type: object
-          additionalProperties: true
-    BillOfLadingBookmarkResponse:
-      type: object
-      properties:
-        obj:
-          $ref: '#/components/schemas/BillOfLadingBookmark'
-    Location:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        locode:
-          type: string
-        country:
-          type: string
-        country_code:
-          type: string
-        state:
-          type: string
-        lat:
-          type: number
-        lng:
-          type: number
     ContainerUploadRequest:
       type: object
       required:
@@ -253,33 +272,7 @@ components:
           type: object
           additionalProperties: true
           description: Optional augmentation data attached to the bookmark.
-    Vessel:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        imo:
-          type: string
-        mmsi:
-          type: string
-        call_sign:
-          type: string
-        flag:
-          type: string
-        voyage_no:
-          type: array
-          items:
-            type: string
   parameters:
-    BookmarkId:
-      name: bookmark_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The bill-of-lading bookmark id returned by an upload call.
     XCustomer:
       name: x-customer
       in: header
@@ -287,6 +280,13 @@ components:
       schema:
         type: string
       description: Enterprise-only header indicating which sub-account / flow the call applies to.
+    BookmarkId:
+      name: bookmark_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The bill-of-lading bookmark id returned by an upload call.
   responses:
     Unauthorized:
       description: Missing or invalid API key.
