@@ -1,4 +1,4 @@
-# Portcast (portcast)
+# Portcast
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,115 +66,124 @@
 
 Portcast is a predictive supply-chain visibility platform whose Container Tracking API delivers the full journey of an ocean container - milestones, vessel schedules, port codes, and machine-learning predicted ETAs and ETDs - in a single JSON response, tracked by container number, bill of lading, or booking number plus carrier SCAC, with push (webhook) callbacks on every update.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/portcast/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/portcast/refs/heads/main/apis.yml)
+**Areas:** Supply Chain · Container Tracking · Logistics · Predictive ETA · Ocean Freight · Freight
 
-## Tags
+## Portcast on APIs.io
 
-- Supply Chain
-- Container Tracking
-- Logistics
-- Predictive ETA
-- Ocean Freight
+Everything profiled for Portcast is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/portcast/](https://apis.io/providers/portcast/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (5)
 
-- **Created:** 2026-06-21
-- **Modified:** 2026-06-21
+- [Portcast Augmentation API](https://apis.io/apis/portcast/portcast-augmentation-api/) — Manage custom augmentation data on a bookmark.
+- [Portcast Container Detail API](https://apis.io/apis/portcast/portcast-container-detail-api/) — Container route, risks, and terminal data sub-APIs.
+- [Portcast Reference API](https://apis.io/apis/portcast/portcast-reference-api/) — Supported carrier SCAC reference data.
+- [Portcast Tracking Data API](https://apis.io/apis/portcast/portcast-tracking-data-api/) — Retrieve tracking results, predicted ETA/ETD, and milestones.
+- [Portcast Tracking Upload API](https://apis.io/apis/portcast/portcast-tracking-upload-api/) — Start tracking an ocean shipment.
 
-## APIs
+### Published properties
 
-### Portcast Container Tracking API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Upload an ocean shipment by container number, bill of lading, or booking number plus carrier SCAC and retrieve the full container journey - standardized milestone events, terminal details, transport plan, delays, and CO2 emissions - in one JSON response, with optional callback_url push updates.
+#### Agentic access (1)
 
-- **Human URL:** [https://portcast.stoplight.io/docs/portcast-api/](https://portcast.stoplight.io/docs/portcast-api/)
-- **Base URL:** `https://api.portcast.io/api/v2/eta`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Portcast Agentic Access](https://apis.io/agentic-access/portcast/portcast-agentic-access/)
 
-- Container Tracking
-- Ocean Freight
-- Milestones
+#### Collections (6)
 
-#### Properties
+Postman and Open Collection request collections.
 
-- [Documentation](https://portcast.stoplight.io/docs/portcast-api/5xrqljlsknrvm-input-data-guide)
-- [API Reference](https://portcast.stoplight.io/docs/portcast-api/e120e68fcdc40-upload-using-container-number)
-- [OpenAPI](openapi/portcast-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/portcast.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/portcast.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Portcast Container Tracking API](https://apis.io/collections/portcast/open-portcast/)
+- [Portcast Container Tracking Augmentation API](https://apis.io/collections/portcast/open-portcast-augmentation-api/)
+- [Portcast Container Tracking Augmentation Container Detail API](https://apis.io/collections/portcast/open-portcast-container-detail-api/)
+- [Portcast Container Tracking Augmentation Reference API](https://apis.io/collections/portcast/open-portcast-reference-api/)
+- [Portcast Container Tracking Augmentation Tracking Data API](https://apis.io/collections/portcast/open-portcast-tracking-data-api/)
+- [Portcast Container Tracking Augmentation Tracking Upload API](https://apis.io/collections/portcast/open-portcast-tracking-upload-api/)
 
-### Portcast Predictive ETA API
+#### Security (2)
 
-Machine-learning predicted ETA and ETD per leg surfaced through the tracking response sailing_info_tracking - predicted arrival and departure local times alongside scheduled and actual times, plus live AIS vessel position.
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://www.portcast.io/predictive-visibility](https://www.portcast.io/predictive-visibility)
-- **Base URL:** `https://api.portcast.io/api/v2/eta`
+- [Portcast Authentication](https://apis.io/security/portcast/portcast-authentication/)
+- [Portcast Domain Security](https://apis.io/security/portcast/portcast-domain-security/)
 
-#### Tags
+#### Plans and pricing (1)
 
-- Predictive ETA
-- Machine Learning
-- Ocean Freight
+Published plans, tiers and prices.
 
-#### Properties
+- [Portcast Plans Pricing](https://apis.io/plans/portcast/portcast-plans-pricing/)
 
-- [Documentation](https://portcast.stoplight.io/docs/portcast-api/7p466hav2ds7x-container-events-data-types)
-- [OpenAPI](openapi/portcast-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/portcast.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/portcast.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Rate limits (1)
 
-### Portcast Vessel Schedules API
+Published request limits.
 
-Vessel schedule, voyage, and live AIS position data surfaced through the tracking response - vessel name, IMO, MMSI, flag, inbound and outbound voyage numbers, and scheduled arrival and departure times at each port on the route.
+- [Portcast Rate Limits](https://apis.io/rate-limits/portcast/portcast-rate-limits/)
 
-- **Human URL:** [https://www.portcast.io/ocean-vessel-tracking-api](https://www.portcast.io/ocean-vessel-tracking-api)
-- **Base URL:** `https://api.portcast.io/api/v2/eta`
+#### FinOps (1)
 
-#### Tags
+What the API costs to run, by operation.
 
-- Vessel Schedules
-- AIS
-- Voyage
+- [Portcast Finops](https://apis.io/finops/portcast/portcast-finops/)
 
-#### Properties
+## Where to find this API
 
-- [Documentation](https://www.portcast.io/ocean-vessel-tracking-api)
-- [OpenAPI](openapi/portcast-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/portcast.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/portcast.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-### Portcast Webhooks (Push API)
-
-Register an HTTPS callback_url on a tracking upload and Portcast pushes the full tracking JSON object to your endpoint whenever container milestones or predictions are updated - eliminating polling.
-
-- **Human URL:** [https://portcast.stoplight.io/docs/portcast-api/dxd93fedun52o-push-api](https://portcast.stoplight.io/docs/portcast-api/dxd93fedun52o-push-api)
-- **Base URL:** `https://api.portcast.io/api/v2/eta`
-
-#### Tags
-
-- Webhooks
-- Push
-- Callbacks
-
-#### Properties
-
-- [Documentation](https://portcast.stoplight.io/docs/portcast-api/dxd93fedun52o-push-api)
-- [OpenAPI](openapi/portcast-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/portcast.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/portcast.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/portcast)
-- [LinkedIn](https://www.linkedin.com/company/portcast)
 - [Website](https://www.portcast.io/)
 - [Documentation](https://portcast.stoplight.io/docs/portcast-api/)
-- [Plans](plans/portcast-plans-pricing.yml)
-- [Rate Limits](rate-limits/portcast-rate-limits.yml)
-- [Fin Ops](finops/portcast-finops.yml)
+- [Blog](https://www.portcast.io/blog)
+- [GitHub](https://github.com/portcast)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 26.3** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 50.6 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 31.0 |
+| Access clarity | 5.3 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 11.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/portcast/](https://apis.io/providers/portcast/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Portcast: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/portcast/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
